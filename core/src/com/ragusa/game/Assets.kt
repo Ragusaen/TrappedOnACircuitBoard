@@ -5,16 +5,9 @@ import com.badlogic.gdx.assets.AssetDescriptor
 import com.badlogic.gdx.assets.AssetManager
 
 object Assets {
-    object otherfolder {
-    }
     object tiles {
         object and {
             val state_000 = AssetDescriptor("textures\\tiles\\and\\state_000.png", Texture::class.java);
-            val state_001 = AssetDescriptor("textures\\tiles\\and\\state_001.png", Texture::class.java);
-            val state_010 = AssetDescriptor("textures\\tiles\\and\\state_010.png", Texture::class.java);
-            val state_100 = AssetDescriptor("textures\\tiles\\and\\state_100.png", Texture::class.java);
-            val state_101 = AssetDescriptor("textures\\tiles\\and\\state_101.png", Texture::class.java);
-            val state_110 = AssetDescriptor("textures\\tiles\\and\\state_110.png", Texture::class.java);
             val state_111 = AssetDescriptor("textures\\tiles\\and\\state_111.png", Texture::class.java);
         }
         object bend {
@@ -26,6 +19,24 @@ object Assets {
             val state_10 = AssetDescriptor("textures\\tiles\\diode\\state_10.png", Texture::class.java);
             val state_11 = AssetDescriptor("textures\\tiles\\diode\\state_11.png", Texture::class.java);
         }
+        object gate {
+            object binary {
+                val state_00 = AssetDescriptor("textures\\tiles\\gate\\binary\\state_00.png", Texture::class.java);
+                val state_01 = AssetDescriptor("textures\\tiles\\gate\\binary\\state_01.png", Texture::class.java);
+                val state_10 = AssetDescriptor("textures\\tiles\\gate\\binary\\state_10.png", Texture::class.java);
+                val state_11 = AssetDescriptor("textures\\tiles\\gate\\binary\\state_11.png", Texture::class.java);
+            }
+            object ternary {
+                val state_000 = AssetDescriptor("textures\\tiles\\gate\\ternary\\state_000.png", Texture::class.java);
+                val state_001 = AssetDescriptor("textures\\tiles\\gate\\ternary\\state_001.png", Texture::class.java);
+                val state_010 = AssetDescriptor("textures\\tiles\\gate\\ternary\\state_010.png", Texture::class.java);
+                val state_011 = AssetDescriptor("textures\\tiles\\gate\\ternary\\state_011.png", Texture::class.java);
+                val state_100 = AssetDescriptor("textures\\tiles\\gate\\ternary\\state_100.png", Texture::class.java);
+                val state_101 = AssetDescriptor("textures\\tiles\\gate\\ternary\\state_101.png", Texture::class.java);
+                val state_110 = AssetDescriptor("textures\\tiles\\gate\\ternary\\state_110.png", Texture::class.java);
+                val state_111 = AssetDescriptor("textures\\tiles\\gate\\ternary\\state_111.png", Texture::class.java);
+            }
+        }
         val insulated = AssetDescriptor("textures\\tiles\\insulated.png", Texture::class.java);
         object inverter {
             val state_01 = AssetDescriptor("textures\\tiles\\inverter\\state_01.png", Texture::class.java);
@@ -34,7 +45,6 @@ object Assets {
         }
         object or {
             val state_000 = AssetDescriptor("textures\\tiles\\or\\state_000.png", Texture::class.java);
-            val state_100 = AssetDescriptor("textures\\tiles\\or\\state_100.png", Texture::class.java);
             val state_101 = AssetDescriptor("textures\\tiles\\or\\state_101.png", Texture::class.java);
             val state_110 = AssetDescriptor("textures\\tiles\\or\\state_110.png", Texture::class.java);
             val state_111 = AssetDescriptor("textures\\tiles\\or\\state_111.png", Texture::class.java);
@@ -58,10 +68,8 @@ object Assets {
         }
         object xor {
             val state_000 = AssetDescriptor("textures\\tiles\\xor\\state_000.png", Texture::class.java);
-            val state_011 = AssetDescriptor("textures\\tiles\\xor\\state_011.png", Texture::class.java);
             val state_101 = AssetDescriptor("textures\\tiles\\xor\\state_101.png", Texture::class.java);
             val state_110 = AssetDescriptor("textures\\tiles\\xor\\state_110.png", Texture::class.java);
-            val state_111 = AssetDescriptor("textures\\tiles\\xor\\state_111.png", Texture::class.java);
         }
     }
 
@@ -70,23 +78,29 @@ object Assets {
     val manager = AssetManager()
     fun LoadAll() {
         manager.load(tiles.and.state_000)
-        manager.load(tiles.and.state_001)
-        manager.load(tiles.and.state_010)
-        manager.load(tiles.and.state_100)
-        manager.load(tiles.and.state_101)
-        manager.load(tiles.and.state_110)
         manager.load(tiles.and.state_111)
         manager.load(tiles.bend.state_00)
         manager.load(tiles.bend.state_11)
         manager.load(tiles.diode.state_00)
         manager.load(tiles.diode.state_10)
         manager.load(tiles.diode.state_11)
+        manager.load(tiles.gate.binary.state_00)
+        manager.load(tiles.gate.binary.state_01)
+        manager.load(tiles.gate.binary.state_10)
+        manager.load(tiles.gate.binary.state_11)
+        manager.load(tiles.gate.ternary.state_000)
+        manager.load(tiles.gate.ternary.state_001)
+        manager.load(tiles.gate.ternary.state_010)
+        manager.load(tiles.gate.ternary.state_011)
+        manager.load(tiles.gate.ternary.state_100)
+        manager.load(tiles.gate.ternary.state_101)
+        manager.load(tiles.gate.ternary.state_110)
+        manager.load(tiles.gate.ternary.state_111)
         manager.load(tiles.insulated)
         manager.load(tiles.inverter.state_01)
         manager.load(tiles.inverter.state_10)
         manager.load(tiles.inverter.state_11)
         manager.load(tiles.or.state_000)
-        manager.load(tiles.or.state_100)
         manager.load(tiles.or.state_101)
         manager.load(tiles.or.state_110)
         manager.load(tiles.or.state_111)
@@ -100,10 +114,8 @@ object Assets {
         manager.load(tiles.straight.state_00)
         manager.load(tiles.straight.state_11)
         manager.load(tiles.xor.state_000)
-        manager.load(tiles.xor.state_011)
         manager.load(tiles.xor.state_101)
         manager.load(tiles.xor.state_110)
-        manager.load(tiles.xor.state_111)
 
     }
 }

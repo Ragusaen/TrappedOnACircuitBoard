@@ -25,33 +25,66 @@ class TileGrid : IRenderable, Iterable<Tile> {
         override fun next(): Tile {
             return next!!
         }
+    }
+
+    class WiredTileIterator(tileGrid: TileGrid) : Iterator<WiredTile> {
+        private val tilesIterator = tileGrid.tiles.iterator()
+        private var next: WiredTile? = null
+
+        override fun hasNext(): Boolean {
+            next = null
+            while (tilesIterator.hasNext()) {
+                val nextTile = tilesIterator.next()
+                if (nextTile != null && nextTile is WiredTile) {
+                    next = nextTile
+                    return true
+                }
+            }
+            return false
+        }
+
+        override fun next(): WiredTile {
+            return next!!
+        }
+
+    }
+
+    class GateTileIterator(tileGrid: TileGrid) : Iterator<GateTile> {
+        private val tilesIterator = tileGrid.tiles.iterator()
+        private var next: GateTile? = null
+
+        override fun hasNext(): Boolean {
+            next = null
+            while (tilesIterator.hasNext()) {
+                val nextTile = tilesIterator.next()
+                if (nextTile != null && nextTile is GateTile) {
+                    next = nextTile
+                    return true
+                }
+            }
+            return false
+        }
+
+        override fun next(): GateTile {
+            return next!!
+        }
 
     }
 
     private val tiles = Array2D<Tile>(10, 10)
 
     override fun render(batch: SpriteBatch) {
-        for (tile: Tile? in tiles) {
-            tile?.render(batch)
+        for (tile in this) {
+            tile.render(batch)
         }
     }
 
 
     fun evaluateCircuit(maxSteps: Int = tiles.size) {
-        // Reset all ports to default state
-        for (tile in tiles) {
-            if (tile != null) {
-                for (port in tile.ports) {
-                    port.state = PortState.OFF
-                }
-                tile.updatePorts()
-            }
-        }
-
         var steps = 0
         //
         for (i in 0 until tiles.size) { // DEBUG; replace step with
-            for (tile in this) {
+            for (tile in WiredTileIterator(this)) {
                 for (port in tile.ports) {
                     if (port.connectedPort == null)
                         continue
@@ -65,7 +98,7 @@ class TileGrid : IRenderable, Iterable<Tile> {
                         port.state = PortState.OFF
                 }
 
-                tile.updatePorts()
+                tile.updateInternalState()
 
                 if ( ++steps >= maxSteps)
                     return
@@ -90,21 +123,21 @@ class TileGrid : IRenderable, Iterable<Tile> {
     }
 
     private fun connectTiles(from: Pair<Int, Int>, to: Pair<Int, Int>, direction: Direction) {
-        if (from in tiles && tiles[from] != null && tiles[to] != null) {
-            val fromTile = tiles[from]!!
-            val toTile = tiles[to]!!
+        // If from and to coordinates are within bounds of tiles
+        if (isWiredTile(from) && isWiredTile(to)) {
+            val fromTile = tiles[from] as WiredTile
+            val toTile = tiles[to] as WiredTile
 
-            val fromPort = fromTile.ports.singleOrNull {it.direction + fromTile.direction == direction}
-            val toPort = toTile.ports.singleOrNull {it.direction + toTile.direction == -direction}
+            // Find the connected ports, return if they don't exist
+            val fromPort = fromTile.ports.singleOrNull {it.direction + fromTile.direction == direction} ?: return
+            val toPort = toTile.ports.singleOrNull {it.direction + toTile.direction == -direction} ?: return
 
-            if (fromPort != null && toPort != null) {
-                fromPort.connectedPort = toPort
-                toPort.connectedPort = fromPort
-            }
+            fromPort.connectedPort = toPort
+            toPort.connectedPort = fromPort
         }
     }
 
+    private fun isWiredTile(c: Pair<Int, Int>): Boolean = c in tiles && tiles[c] is WiredTile
 
     override operator fun iterator() = TileGridIterator(this)
-
 }

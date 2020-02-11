@@ -4,15 +4,14 @@ import com.badlogic.gdx.graphics.Texture
 import com.ragusa.game.Assets
 import com.ragusa.game.Direction
 
-class TileSource : Tile() {
+class TileSource : WiredTile() {
     override val ports: Array<TilePort> = arrayOf(TilePort(Direction.NORTH))
 
-    override val stateTextures: Map<Int, Texture> = mapOf(
+    override val wireStateTextures: Map<Int, Texture> = initTextureStates(mapOf(
             0b1 to Assets.tiles.source.state_1
-    ).entries.map { Pair(it.key, Assets.manager.get(it.value)) }.toMap()
+    ))
 
-
-    override fun updatePorts() {
+    override fun updateInternalState() {
         ports[0].state = PortState.OUT
     }
 }

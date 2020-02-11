@@ -1,5 +1,6 @@
 package com.ragusa.game.tiles
 
+import com.badlogic.gdx.assets.AssetDescriptor
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.BitmapFont
@@ -19,7 +20,7 @@ enum class PortState {
     OUT // Port is transmitting power to connected port
 }
 
-class TilePort(val direction: Direction) {
+data class TilePort(val direction: Direction) {
     var state = PortState.OFF
     var connectedPort: TilePort? = null
 
@@ -29,76 +30,47 @@ class TilePort(val direction: Direction) {
 
 
 abstract class Tile: IRenderable {
-    abstract val ports: Array<TilePort>
 
     // Update the internal state of the tile.
     // This only concerns the state of the ports on this tile, not the connected ones
-    abstract fun updatePorts()
+    abstract fun updateInternalState()
 
-    protected abstract val stateTextures: Map<Int, Texture>
+    private val baseSprite: Sprite = initSprite(Sprite(Assets.manager.get(Assets.tiles.plain), 16, 16))
 
-
-    protected val sprite: Sprite = initSprite()
+    open fun updateSprites() {
+        baseSprite.rotation = -90f * direction.ordinal
+        baseSprite.setPosition(position.x, position.y)
+    }
 
     var position: Vector2 = Vector2.Zero
         set(value) {
-            sprite.setPosition(value.x, value.y)
             field = value
+            updateSprites()
         }
 
-    var direction = Direction.NORTH
+    var direction: Direction = Direction.NORTH
         set(value) {
-            sprite.rotation = -90f * value.ordinal
             field = value
+            updateSprites()
         }
 
 
     companion object {
-        val tileSize = 64f
-    }
-
-    fun debugState(batch: SpriteBatch) {
-        val font = BitmapFont()
-
-        for (port in ports) {
-            val relpos = when(port.direction + direction) {
-                Direction.NORTH -> Vector2(0f,1f)
-                Direction.EAST -> Vector2(1f,0f)
-                Direction.SOUTH -> Vector2(0f,-1f)
-                Direction.WEST -> Vector2(-1f,0f)
-            }
-            val pos = Vector2(position).add(relpos.scl(tileSize / 3).add(Vector2(tileSize / 2, tileSize / 2)))
-            font.draw(batch, port.state.name, pos.x, pos.y)
-        }
+        const val tileSize = 64f
     }
 
     override fun render(batch: SpriteBatch) {
-        sprite.texture = stateTextures[getState()]
-        sprite.draw(batch)
+        baseSprite.draw(batch)
     }
 
-    private fun getState(): Int {
-        var state: Int = 0
-        for (port in ports) {
-            if (port.isOn())
-                state += 1
-            state = state shl 1
-        }
-        state = state shr 1
-
-        // Debug
-        if (!stateTextures.containsKey(state))
-            throw InvalidKeyException("The tile has not defined a sprite for state $state")
-
-        return state
-    }
-
-    private fun initSprite(): Sprite {
-        val sprite = Sprite(Assets.manager.get(Assets.tiles.plain), 16, 16)
+    protected fun initSprite(sprite: Sprite): Sprite {
         sprite.setSize(tileSize, tileSize)
         sprite.setOrigin(tileSize / 2, tileSize / 2)
         return sprite
     }
+
+    protected fun initTextureStates(map: Map<Int, AssetDescriptor<Texture>>): Map<Int, Texture> =
+            map.entries.map { Pair(it.key, Assets.manager.get(it.value)) }.toMap()
 
 }
 

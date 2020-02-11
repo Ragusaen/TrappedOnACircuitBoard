@@ -2,23 +2,18 @@ package com.ragusa.game.tiles
 
 import com.badlogic.gdx.graphics.Texture
 import com.ragusa.game.Assets
-import com.ragusa.game.Direction
 
-class TileAnd : Tile() {
-    override val ports: Array<TilePort> = arrayOf(TilePort(Direction.NORTH), TilePort(Direction.EAST), TilePort(Direction.WEST))
+class TileAnd : TernaryGateTile() {
 
-    override val stateTextures: Map<Int, Texture> = mapOf(
-            0b000 to Assets.tiles.and.state_000,
-            0b001 to Assets.tiles.and.state_001,
-            0b010 to Assets.tiles.and.state_010,
-            0b100 to Assets.tiles.and.state_100,
-            0b101 to Assets.tiles.and.state_101,
-            0b110 to Assets.tiles.and.state_110,
-            0b111 to Assets.tiles.and.state_111
-    ).entries.map { Pair(it.key, Assets.manager.get(it.value)) }.toMap()
+    override val gateStateTextures: Map<Int, Texture> = initTextureStates(mapOf(
+            DEFAULT_TEXTURE to Assets.tiles.and.state_000,
+            0b111 to Assets.tiles.and.state_000
+    ))
 
-    override fun updatePorts() {
+    override fun updateInternalState() {
         if (ports[1].isOn() && ports[2].isOn())
-            ports[0].state = PortState.OUT;
+            delayedPorts[0].state = PortState.OUT;
+        else if (ports[0].state == PortState.OUT)
+            delayedPorts[0].state = PortState.OFF;
     }
 }
