@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.Assets
 import com.ragusa.game.Direction
 import com.ragusa.game.IRenderable
+import com.ragusa.game.initSprite
 import java.security.InvalidKeyException
 
 
@@ -62,15 +63,6 @@ abstract class Tile: IRenderable {
     override fun render(batch: SpriteBatch) {
         baseSprite.draw(batch)
     }
-
-    protected fun initSprite(sprite: Sprite): Sprite {
-        sprite.setSize(tileSize, tileSize)
-        sprite.setOrigin(tileSize / 2, tileSize / 2)
-        return sprite
-    }
-
-    protected fun initTextureStates(map: Map<Int, AssetDescriptor<Texture>>): Map<Int, Texture> =
-            map.entries.map { Pair(it.key, Assets.manager.get(it.value)) }.toMap()
 
 }
 

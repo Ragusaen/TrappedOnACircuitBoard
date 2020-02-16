@@ -83,6 +83,10 @@ class TileGrid : IRenderable, Iterable<Tile> {
     fun evaluateCircuit(maxSteps: Int = tiles.size) {
         var steps = 0
         //
+
+        for (tile in WiredTileIterator(this))
+            tile.updateInternalState()
+
         for (i in 0 until tiles.size) { // DEBUG; replace step with
             for (tile in WiredTileIterator(this)) {
                 for (port in tile.ports) {
@@ -98,7 +102,8 @@ class TileGrid : IRenderable, Iterable<Tile> {
                         port.state = PortState.OFF
                 }
 
-                tile.updateInternalState()
+                if (tile !is GateTile)
+                    tile.updateInternalState()
 
                 if ( ++steps >= maxSteps)
                     return

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.Assets
 import com.ragusa.game.Direction
+import com.ragusa.game.initSprite
 import java.security.InvalidKeyException
 
 abstract class WiredTile : Tile() {

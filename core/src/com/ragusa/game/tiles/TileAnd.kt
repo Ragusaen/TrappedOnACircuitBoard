@@ -2,6 +2,7 @@ package com.ragusa.game.tiles
 
 import com.badlogic.gdx.graphics.Texture
 import com.ragusa.game.Assets
+import com.ragusa.game.initTextureStates
 
 class TileAnd : TernaryGateTile() {
 
@@ -12,8 +13,8 @@ class TileAnd : TernaryGateTile() {
 
     override fun updateInternalState() {
         if (ports[1].isOn() && ports[2].isOn())
-            delayedPorts[0].state = PortState.OUT;
+            ports[0].state = PortState.OUT;
         else if (ports[0].state == PortState.OUT)
-            delayedPorts[0].state = PortState.OFF;
+            ports[0].state = PortState.OFF;
     }
 }

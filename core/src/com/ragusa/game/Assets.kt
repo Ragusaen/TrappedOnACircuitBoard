@@ -5,6 +5,10 @@ import com.badlogic.gdx.assets.AssetDescriptor
 import com.badlogic.gdx.assets.AssetManager
 
 object Assets {
+    object player {
+        val off = AssetDescriptor("textures\\player\\off.png", Texture::class.java);
+        val on = AssetDescriptor("textures\\player\\on.png", Texture::class.java);
+    }
     object tiles {
         object and {
             val state_000 = AssetDescriptor("textures\\tiles\\and\\state_000.png", Texture::class.java);
@@ -77,6 +81,8 @@ object Assets {
 
     val manager = AssetManager()
     fun LoadAll() {
+        manager.load(player.off)
+        manager.load(player.on)
         manager.load(tiles.and.state_000)
         manager.load(tiles.and.state_111)
         manager.load(tiles.bend.state_00)

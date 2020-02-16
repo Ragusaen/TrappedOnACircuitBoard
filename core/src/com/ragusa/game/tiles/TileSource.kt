@@ -3,6 +3,7 @@ package com.ragusa.game.tiles
 import com.badlogic.gdx.graphics.Texture
 import com.ragusa.game.Assets
 import com.ragusa.game.Direction
+import com.ragusa.game.initTextureStates
 
 class TileSource : WiredTile() {
     override val ports: Array<TilePort> = arrayOf(TilePort(Direction.NORTH))
