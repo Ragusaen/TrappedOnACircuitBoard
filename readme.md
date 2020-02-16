@@ -1,9 +1,4 @@
-# Trapped on a Circuit Board
-
-This is a game about a small robot that must use logic gates to make pathways to complete each level. The robot can only move on live wires as it requires power. 
-
-
-# TODO
+# List of things to do
 
 - [X] Implement circuit tiles
   - [X] Make the evalution of the circuit work
