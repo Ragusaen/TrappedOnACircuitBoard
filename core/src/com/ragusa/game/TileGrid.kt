@@ -2,6 +2,7 @@ package com.ragusa.game
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
+import com.ragusa.game.player.Player
 import com.ragusa.game.tiles.GateTile
 import com.ragusa.game.tiles.PortState
 import com.ragusa.game.tiles.Tile
@@ -36,7 +37,7 @@ class TileGrid : IRenderable, Iterable<Tile> {
             next = null
             while (tilesIterator.hasNext()) {
                 val nextTile = tilesIterator.next()
-                if (nextTile != null && nextTile is WiredTile) {
+                if (nextTile is WiredTile) {
                     next = nextTile
                     return true
                 }
@@ -58,7 +59,7 @@ class TileGrid : IRenderable, Iterable<Tile> {
             next = null
             while (tilesIterator.hasNext()) {
                 val nextTile = tilesIterator.next()
-                if (nextTile != null && nextTile is GateTile) {
+                if (nextTile is GateTile) {
                     next = nextTile
                     return true
                 }
@@ -73,6 +74,8 @@ class TileGrid : IRenderable, Iterable<Tile> {
     }
 
     private val tiles: MutableMap<Pair<Int, Int>, Tile> = mutableMapOf()
+
+    val players: MutableList<Player> = mutableListOf()
 
     override fun render(batch: SpriteBatch) {
         for (tile in this) {
