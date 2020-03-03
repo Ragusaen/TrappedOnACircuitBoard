@@ -71,7 +71,7 @@ class TileGrid : IRenderable, Iterable<Tile> {
 
     }
 
-    private val tiles = Array2D<Tile>(10, 10)
+    private val tiles: Set<>
 
     override fun render(batch: SpriteBatch) {
         for (tile in this) {
