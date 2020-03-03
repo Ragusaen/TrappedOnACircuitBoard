@@ -2,16 +2,16 @@ package com.ragusa.game
 
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.ragusa.game.player.Player
 import com.ragusa.game.tiles.*
-import java.util.*
 
 class MainGame : ApplicationAdapter() {
     var batch: SpriteBatch? = null
 
     var tileGrid: TileGrid? = null
+    var player: Player? = null
 
     val evaluationTimer = Timer(100) // Every 100 ms
 
@@ -37,7 +37,7 @@ class MainGame : ApplicationAdapter() {
 
         tileGrid!!.evaluateCircuit()
 
-
+        player = Player()
 
         batch = SpriteBatch()
     }
@@ -53,6 +53,7 @@ class MainGame : ApplicationAdapter() {
 
         batch!!.begin()
         tileGrid!!.render(batch!!)
+        player!!.render(batch!!)
         batch!!.end()
     }
 

@@ -1,15 +1,16 @@
-package com.ragusa.game.tiles
+package com.ragusa.game
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
-import com.ragusa.game.Array2D
-import com.ragusa.game.Direction
-import com.ragusa.game.IRenderable
+import com.ragusa.game.tiles.GateTile
+import com.ragusa.game.tiles.PortState
+import com.ragusa.game.tiles.Tile
+import com.ragusa.game.tiles.WiredTile
 
 class TileGrid : IRenderable, Iterable<Tile> {
 
     class TileGridIterator(tileGrid: TileGrid) : Iterator<Tile> {
-        private val tilesIterator = tileGrid.tiles.iterator()
+        private val tilesIterator = tileGrid.tiles.entries.map { it.value }.iterator()
         private var next: Tile? = null
 
         override fun hasNext(): Boolean {
@@ -28,7 +29,7 @@ class TileGrid : IRenderable, Iterable<Tile> {
     }
 
     class WiredTileIterator(tileGrid: TileGrid) : Iterator<WiredTile> {
-        private val tilesIterator = tileGrid.tiles.iterator()
+        private val tilesIterator = tileGrid.tiles.entries.map { it.value }.iterator()
         private var next: WiredTile? = null
 
         override fun hasNext(): Boolean {
@@ -50,7 +51,7 @@ class TileGrid : IRenderable, Iterable<Tile> {
     }
 
     class GateTileIterator(tileGrid: TileGrid) : Iterator<GateTile> {
-        private val tilesIterator = tileGrid.tiles.iterator()
+        private val tilesIterator = tileGrid.tiles.entries.map { it.value }.iterator()
         private var next: GateTile? = null
 
         override fun hasNext(): Boolean {
@@ -71,7 +72,7 @@ class TileGrid : IRenderable, Iterable<Tile> {
 
     }
 
-    private val tiles: Set<>
+    private val tiles: MutableMap<Pair<Int, Int>, Tile> = mutableMapOf()
 
     override fun render(batch: SpriteBatch) {
         for (tile in this) {
@@ -111,11 +112,11 @@ class TileGrid : IRenderable, Iterable<Tile> {
         }
     }
 
-    operator fun get(x: Int, y: Int): Tile? = tiles[x,y]
+    operator fun get(x: Int, y: Int): Tile? = tiles[Pair(x,y)]
 
     operator fun set(x: Int, y: Int, value: Tile) {
         value.position = Vector2(x.toFloat(), y.toFloat()).scl(Tile.tileSize)
-        tiles[x,y] = value
+        tiles[Pair(x,y)] = value
         updateConnections(x,y)
     }
 
