@@ -4,10 +4,11 @@ import com.badlogic.gdx.assets.AssetDescriptor
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.ragusa.game.tiles.Tile
+import com.ragusa.game.tiles.TileAble
 
 fun initSprite(sprite: Sprite): Sprite {
-    sprite.setSize(Tile.tileSize, Tile.tileSize)
-    sprite.setOrigin(Tile.tileSize / 2, Tile.tileSize / 2)
+    sprite.setSize(TileAble.tileSize, TileAble.tileSize)
+    sprite.setOrigin(TileAble.tileSize / 2, TileAble.tileSize / 2)
     return sprite
 }
 

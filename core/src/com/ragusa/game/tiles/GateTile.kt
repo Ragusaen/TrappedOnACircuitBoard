@@ -3,10 +3,13 @@ package com.ragusa.game.tiles
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.Assets
 import com.ragusa.game.Direction
 import com.ragusa.game.initSprite
 import com.ragusa.game.initTextureStates
+import com.ragusa.game.utility.plus
+import com.ragusa.game.utility.setPosition
 import java.util.*
 
 // Gate tiles are tiles that transform the signal. These are always delayed (atleast) one tick.
@@ -24,14 +27,15 @@ abstract class GateTile : WiredTile() {
         gateSprite.setPosition(position.x, position.y)
     }
 
-    override fun render(batch: SpriteBatch) {
-        super.render(batch)
+    override fun render(batch: SpriteBatch, relativeTo: Vector2) {
+        super.render(batch, relativeTo)
 
         val state = getState()
         if (gateStateTextures.containsKey(state))
             gateSprite.texture = gateStateTextures[state]
         else // Use the default if the given state does not matter for the gate
             gateSprite.texture = gateStateTextures[DEFAULT_TEXTURE]
+        gateSprite.setPosition(relativeTo + position)
         gateSprite.draw(batch)
     }
 }

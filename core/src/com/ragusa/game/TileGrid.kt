@@ -2,13 +2,10 @@ package com.ragusa.game
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
-import com.ragusa.game.player.Player
-import com.ragusa.game.tiles.GateTile
-import com.ragusa.game.tiles.PortState
-import com.ragusa.game.tiles.Tile
-import com.ragusa.game.tiles.WiredTile
+import com.ragusa.game.player.Robot
+import com.ragusa.game.tiles.*
 
-class TileGrid : IRenderable, Iterable<Tile> {
+class TileGrid(val robot: Robot) : IRenderable, Iterable<Tile> {
 
     class TileGridIterator(tileGrid: TileGrid) : Iterator<Tile> {
         private val tilesIterator = tileGrid.tiles.entries.map { it.value }.iterator()
@@ -75,18 +72,15 @@ class TileGrid : IRenderable, Iterable<Tile> {
 
     private val tiles: MutableMap<Pair<Int, Int>, Tile> = mutableMapOf()
 
-    val players: MutableList<Player> = mutableListOf()
-
-    override fun render(batch: SpriteBatch) {
+    override fun render(batch: SpriteBatch, relativeTo: Vector2) {
         for (tile in this) {
-            tile.render(batch)
+            tile.render(batch, relativeTo)
         }
+        robot.render(batch, relativeTo)
     }
 
 
-    fun evaluateCircuit(maxSteps: Int = tiles.size) {
-        var steps = 0
-        //
+    fun evaluateCircuit() {
 
         for (tile in WiredTileIterator(this))
             tile.updateInternalState()
@@ -106,19 +100,20 @@ class TileGrid : IRenderable, Iterable<Tile> {
                         port.state = PortState.OFF
                 }
 
+                // Instantly update internal states of non gate tiles
                 if (tile !is GateTile)
                     tile.updateInternalState()
-
-                if ( ++steps >= maxSteps)
-                    return
             }
         }
+
+        val robotTile = this[robot.position]
+        robot.isOn = robotTile is WiredTile && robotTile.ports.any {it.isOn()}
     }
 
     operator fun get(x: Int, y: Int): Tile? = tiles[Pair(x,y)]
 
     operator fun set(x: Int, y: Int, value: Tile) {
-        value.position = Vector2(x.toFloat(), y.toFloat()).scl(Tile.tileSize)
+        value.position = Vector2(x.toFloat(), y.toFloat()).scl(TileAble.tileSize)
         tiles[Pair(x,y)] = value
         updateConnections(x,y)
     }
@@ -149,4 +144,7 @@ class TileGrid : IRenderable, Iterable<Tile> {
     private fun isWiredTile(c: Pair<Int, Int>): Boolean = c in tiles && tiles[c] is WiredTile
 
     override operator fun iterator() = TileGridIterator(this)
+    operator fun get(v: Vector2): Tile? {
+        return get(v.x.toInt(), v.y.toInt())
+    }
 }

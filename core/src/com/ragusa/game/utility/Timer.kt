@@ -1,4 +1,4 @@
-package com.ragusa.game
+package com.ragusa.game.utility
 
 class Timer(val duration: Long = 0) {
     var lastStartTime = System.currentTimeMillis()

@@ -1,4 +1,4 @@
-package com.ragusa.game
+package com.ragusa.game.utility
 
 class Array2D<T>(val width: Int, val height: Int) {
 

@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.Assets
 import com.ragusa.game.Direction
 import com.ragusa.game.initSprite
+import com.ragusa.game.utility.plus
+import com.ragusa.game.utility.setPosition
 import java.security.InvalidKeyException
 
 abstract class WiredTile : Tile() {
@@ -40,8 +42,9 @@ abstract class WiredTile : Tile() {
         wireSprite.setPosition(position.x, position.y)
     }
 
-    override fun render(batch: SpriteBatch) {
-        super.render(batch)
+    override fun render(batch: SpriteBatch, relativeTo: Vector2) {
+        super.render(batch, relativeTo)
+        wireSprite.setPosition(relativeTo + position)
         wireSprite.texture = wireStateTextures[getState()];
         wireSprite.draw(batch)
     }

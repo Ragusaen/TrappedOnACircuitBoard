@@ -11,6 +11,8 @@ import com.ragusa.game.Assets
 import com.ragusa.game.Direction
 import com.ragusa.game.IRenderable
 import com.ragusa.game.initSprite
+import com.ragusa.game.utility.plus
+import com.ragusa.game.utility.setPosition
 import java.security.InvalidKeyException
 
 
@@ -30,7 +32,7 @@ data class TilePort(val direction: Direction) {
 
 
 
-abstract class Tile: IRenderable {
+abstract class Tile: TileAble() {
 
     // Update the internal state of the tile.
     // This only concerns the state of the ports on this tile, not the connected ones
@@ -43,24 +45,20 @@ abstract class Tile: IRenderable {
         baseSprite.setPosition(position.x, position.y)
     }
 
-    var position: Vector2 = Vector2.Zero
+    override var position: Vector2 = Vector2.Zero
         set(value) {
             field = value
             updateSprites()
         }
 
-    var direction: Direction = Direction.NORTH
+    override var direction: Direction = Direction.NORTH
         set(value) {
             field = value
             updateSprites()
         }
 
-
-    companion object {
-        const val tileSize = 64f
-    }
-
-    override fun render(batch: SpriteBatch) {
+    override fun render(batch: SpriteBatch, relativeTo: Vector2) {
+        baseSprite.setPosition(relativeTo + position)
         baseSprite.draw(batch)
     }
 
