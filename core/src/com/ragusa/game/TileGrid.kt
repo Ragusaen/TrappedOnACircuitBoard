@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.player.Robot
 import com.ragusa.game.tiles.*
+import com.ragusa.game.utility.*
 
 class TileGrid(val robot: Robot) : IRenderable, Iterable<Tile> {
 
@@ -73,8 +74,8 @@ class TileGrid(val robot: Robot) : IRenderable, Iterable<Tile> {
     private val tiles: MutableMap<Pair<Int, Int>, Tile> = mutableMapOf()
 
     override fun render(batch: SpriteBatch, relativeTo: Vector2) {
-        for (tile in this) {
-            tile.render(batch, relativeTo)
+        for ((pos, tile) in tiles) {
+            tile.render(batch, relativeTo + pos.toVector() * TileAble.tileSize)
         }
         robot.render(batch, relativeTo)
     }
@@ -111,12 +112,16 @@ class TileGrid(val robot: Robot) : IRenderable, Iterable<Tile> {
     }
 
     operator fun get(x: Int, y: Int): Tile? = tiles[Pair(x,y)]
+    operator fun get(v: Vector2): Tile? = get(v.x.toInt(), v.y.toInt())
 
     operator fun set(x: Int, y: Int, value: Tile) {
-        value.position = Vector2(x.toFloat(), y.toFloat()).scl(TileAble.tileSize)
         tiles[Pair(x,y)] = value
         updateConnections(x,y)
     }
+    operator fun set(v: Vector2, value: Tile) = set(v.x.toInt(), v.y.toInt(), value)
+
+    fun removeAt(x: Int, y: Int) = tiles.remove(Pair(x,y))
+    fun removeAt(v: Vector2) = removeAt(v.x.toInt(), v.y.toInt())
 
     private fun updateConnections(x: Int, y: Int) {
         val center = Pair(x,y)
@@ -144,7 +149,5 @@ class TileGrid(val robot: Robot) : IRenderable, Iterable<Tile> {
     private fun isWiredTile(c: Pair<Int, Int>): Boolean = c in tiles && tiles[c] is WiredTile
 
     override operator fun iterator() = TileGridIterator(this)
-    operator fun get(v: Vector2): Tile? {
-        return get(v.x.toInt(), v.y.toInt())
-    }
+
 }

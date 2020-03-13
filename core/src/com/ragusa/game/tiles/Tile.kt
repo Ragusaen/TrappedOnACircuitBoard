@@ -42,14 +42,7 @@ abstract class Tile: TileAble() {
 
     open fun updateSprites() {
         baseSprite.rotation = -90f * direction.ordinal
-        baseSprite.setPosition(position.x, position.y)
     }
-
-    override var position: Vector2 = Vector2.Zero
-        set(value) {
-            field = value
-            updateSprites()
-        }
 
     override var direction: Direction = Direction.NORTH
         set(value) {
@@ -58,7 +51,7 @@ abstract class Tile: TileAble() {
         }
 
     override fun render(batch: SpriteBatch, relativeTo: Vector2) {
-        baseSprite.setPosition(relativeTo + position)
+        baseSprite.setPosition(relativeTo)
         baseSprite.draw(batch)
     }
 

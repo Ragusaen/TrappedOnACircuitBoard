@@ -39,29 +39,14 @@ abstract class WiredTile : Tile() {
     override fun updateSprites() {
         super.updateSprites()
         wireSprite.rotation = -90f * direction.ordinal
-        wireSprite.setPosition(position.x, position.y)
     }
 
     override fun render(batch: SpriteBatch, relativeTo: Vector2) {
         super.render(batch, relativeTo)
-        wireSprite.setPosition(relativeTo + position)
+        wireSprite.setPosition(relativeTo)
         wireSprite.texture = wireStateTextures[getState()];
         wireSprite.draw(batch)
     }
 
-    fun debugState(batch: SpriteBatch) {
-        val font = BitmapFont()
-
-        for (port in ports) {
-            val absoluteDirection = when(port.direction + direction) {
-                Direction.NORTH -> Vector2(0f,1f)
-                Direction.EAST -> Vector2(1f,0f)
-                Direction.SOUTH -> Vector2(0f,-1f)
-                Direction.WEST -> Vector2(-1f,0f)
-            }
-            val pos = Vector2(position).add(absoluteDirection.scl(tileSize / 3).add(Vector2(tileSize / 2, tileSize / 2)))
-            font.draw(batch, port.state.name, pos.x, pos.y)
-        }
-    }
 
 }

@@ -9,7 +9,5 @@ abstract class TileAble: IRenderable {
         const val tileSize = 64f
     }
 
-    open var position: Vector2 = Vector2.Zero
-
     open var direction: Direction = Direction.NORTH
 }

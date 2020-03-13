@@ -6,15 +6,18 @@ import com.ragusa.game.player.actions.UndoableAction
 class ActionStack(val tileGrid: TileGrid) {
     val stack = mutableListOf<UndoableAction>()
 
-    fun doAction(action: UndoableAction) {
+    fun doAction(action: UndoableAction): Boolean {
         // Do action, but only add it if it was successful
-        if (action.doAction(tileGrid))
+        if (action.doAction(tileGrid)) {
             stack.add(action)
+            return true
+        }
+        return false
     }
 
     fun undoAction() {
         if (stack.isNotEmpty()) {
-            stack.last().undoAction()
+            stack.last().undoAction(tileGrid)
             stack.removeAt(stack.size - 1)
         }
         // Give some feedback to the user

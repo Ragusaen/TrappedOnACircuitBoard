@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.Assets
+import com.ragusa.game.Direction
 import com.ragusa.game.initSprite
 import com.ragusa.game.initTextureStates
 import com.ragusa.game.tiles.Tile
@@ -16,6 +17,18 @@ class Robot: TileAble() {
             sprite.texture = textures[if (value) 1 else 0]
             field = value
     }
+
+    override var direction = Direction.NORTH
+        set(value) {
+            sprite.rotation = value.ordinal * -90f
+            field = value
+        }
+
+    var position = Vector2(0f, 0f)
+
+    var hand: Tile? = null
+
+
 
     val textures = initTextureStates(mapOf(
         0 to Assets.player.off,

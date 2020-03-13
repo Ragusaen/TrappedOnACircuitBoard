@@ -24,7 +24,6 @@ abstract class GateTile : WiredTile() {
     override fun updateSprites() {
         super.updateSprites()
         gateSprite.rotation = -90f * direction.ordinal
-        gateSprite.setPosition(position.x, position.y)
     }
 
     override fun render(batch: SpriteBatch, relativeTo: Vector2) {
@@ -35,7 +34,7 @@ abstract class GateTile : WiredTile() {
             gateSprite.texture = gateStateTextures[state]
         else // Use the default if the given state does not matter for the gate
             gateSprite.texture = gateStateTextures[DEFAULT_TEXTURE]
-        gateSprite.setPosition(relativeTo + position)
+        gateSprite.setPosition(relativeTo)
         gateSprite.draw(batch)
     }
 }

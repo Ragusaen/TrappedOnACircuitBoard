@@ -22,6 +22,8 @@ class MainGame : ApplicationAdapter() {
 
     var viewPosition = Vector2(0f,0f)
 
+    val renderList = mutableListOf<IRenderable>()
+
     companion object {
         const val debug: Boolean = true
         const val ciruitEvaluationRate: Long = 100 // milliseconds
@@ -32,9 +34,13 @@ class MainGame : ApplicationAdapter() {
         Assets.manager.finishLoading()
 
         val robot = Robot()
+        renderList.add(robot)
+
         robot.position = Vector2(1f,1f)
         tileGrid = TileGrid(robot)
+        renderList.add(tileGrid!!)
         player = Player(robot, tileGrid!!)
+        renderList.add(player!!)
 
         tileGrid!![1,1] = TileSource()
         tileGrid!![3,3] = TileInverter().withRotation(Direction.SOUTH)
@@ -73,7 +79,7 @@ class MainGame : ApplicationAdapter() {
             viewPosition += Vector2(0f, 1f)
 
         batch!!.begin()
-        tileGrid!!.render(batch!!, viewPosition)
+        renderList.forEach { it.render(batch!!, viewPosition) }
         batch!!.end()
     }
 

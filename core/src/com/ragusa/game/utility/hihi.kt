@@ -11,8 +11,6 @@ operator fun Vector2.plus(other: Vector2): Vector2 {
     return Vector2(this.x + other.x, this.y + other.y)
 }
 
-
-
 operator fun Vector2.minus(other: Vector2): Vector2 {
     return Vector2(this.x - other.x, this.y - other.y)
 }
