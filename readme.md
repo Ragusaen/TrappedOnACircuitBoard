@@ -6,10 +6,12 @@ This is a game about a small robot that must use logic gates to make pathways to
 # TODO
 
 - [X] Implement circuit tiles
-  - [X] Make the evalution of the circuit work
+  - [X] Make the evaluation of the circuit work
 - [x] Implement the player
   - [x] Allow the player to move using undoable actions
-  - [ ] Allow player to pick up and place down tiles using undoable actions
+  - [X] Allow player to pick up and place down tiles using undoable actions
+  - [X] Fix bugs with picking and placing tiles
+  - [X] Add insulated and locked tiles
 - [ ] Create level system
   - [ ] Implement the goal tile
 - [ ] Create a level editor

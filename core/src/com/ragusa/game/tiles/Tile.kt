@@ -32,13 +32,11 @@ data class TilePort(val direction: Direction) {
 
 
 
-abstract class Tile: TileAble() {
-
-    // Update the internal state of the tile.
-    // This only concerns the state of the ports on this tile, not the connected ones
-    abstract fun updateInternalState()
+open class Tile(val isLocked: Boolean, val isInsulated: Boolean): TileAble() {
 
     private val baseSprite: Sprite = initSprite(Sprite(Assets.manager.get(Assets.tiles.plain), 16, 16))
+    private val lockedSprite = if (isLocked) initSprite(Sprite(Assets.manager.get(Assets.tiles.screws))) else null
+    private val insulatedSprite=  if (isInsulated) initSprite(Sprite(Assets.manager.get(Assets.tiles.insulated))) else null
 
     open fun updateSprites() {
         baseSprite.rotation = -90f * direction.ordinal
@@ -50,10 +48,24 @@ abstract class Tile: TileAble() {
             updateSprites()
         }
 
-    override fun render(batch: SpriteBatch, relativeTo: Vector2) {
+    final override fun render(batch: SpriteBatch, relativeTo: Vector2) {
+        renderInternal(batch, relativeTo)
+        if (isLocked) {
+            lockedSprite!!.setPosition(relativeTo)
+            lockedSprite.draw(batch)
+        }
+
+        if (isInsulated) {
+            insulatedSprite!!.setPosition(relativeTo)
+            insulatedSprite.draw(batch)
+        }
+    }
+
+    open fun renderInternal(batch: SpriteBatch, relativeTo: Vector2) {
         baseSprite.setPosition(relativeTo)
         baseSprite.draw(batch)
     }
+
 
 }
 

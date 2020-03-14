@@ -12,7 +12,10 @@ import com.ragusa.game.utility.plus
 import com.ragusa.game.utility.setPosition
 import java.security.InvalidKeyException
 
-abstract class WiredTile : Tile() {
+abstract class WiredTile(isLocked: Boolean, isCoated: Boolean) : Tile(isLocked, isCoated) {
+    // Update the internal state of the tile.
+    // This only concerns the state of the ports on this tile, not the connected ones
+    abstract fun updateInternalState()
 
     abstract val ports: Array<TilePort>
 
@@ -41,8 +44,8 @@ abstract class WiredTile : Tile() {
         wireSprite.rotation = -90f * direction.ordinal
     }
 
-    override fun render(batch: SpriteBatch, relativeTo: Vector2) {
-        super.render(batch, relativeTo)
+    override fun renderInternal(batch: SpriteBatch, relativeTo: Vector2) {
+        super.renderInternal(batch, relativeTo)
         wireSprite.setPosition(relativeTo)
         wireSprite.texture = wireStateTextures[getState()];
         wireSprite.draw(batch)

@@ -13,7 +13,7 @@ import com.ragusa.game.utility.setPosition
 import java.util.*
 
 // Gate tiles are tiles that transform the signal. These are always delayed (atleast) one tick.
-abstract class GateTile : WiredTile() {
+abstract class GateTile(isLocked: Boolean, isCoated: Boolean) : WiredTile(isLocked, isCoated) {
     companion object {
         const val DEFAULT_TEXTURE: Int = -1
     }
@@ -26,8 +26,8 @@ abstract class GateTile : WiredTile() {
         gateSprite.rotation = -90f * direction.ordinal
     }
 
-    override fun render(batch: SpriteBatch, relativeTo: Vector2) {
-        super.render(batch, relativeTo)
+    override fun renderInternal(batch: SpriteBatch, relativeTo: Vector2) {
+        super.renderInternal(batch, relativeTo)
 
         val state = getState()
         if (gateStateTextures.containsKey(state))
@@ -39,7 +39,7 @@ abstract class GateTile : WiredTile() {
     }
 }
 
-abstract class BinaryGateTile : GateTile() {
+abstract class BinaryGateTile(isLocked: Boolean, isCoated: Boolean) : GateTile(isLocked, isCoated) {
     final override val ports: Array<TilePort> = arrayOf(TilePort(Direction.NORTH), TilePort(Direction.SOUTH))
 
     final override val wireStateTextures = initTextureStates(mapOf(
@@ -51,7 +51,7 @@ abstract class BinaryGateTile : GateTile() {
 
 }
 
-abstract class TernaryGateTile : GateTile() {
+abstract class TernaryGateTile(isLocked: Boolean, isCoated: Boolean) : GateTile(isLocked, isCoated) {
     final override val ports: Array<TilePort> = arrayOf(TilePort(Direction.NORTH), TilePort(Direction.EAST), TilePort(Direction.WEST))
 
     final override val wireStateTextures = initTextureStates(mapOf(

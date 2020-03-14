@@ -108,7 +108,7 @@ class TileGrid(val robot: Robot) : IRenderable, Iterable<Tile> {
         }
 
         val robotTile = this[robot.position]
-        robot.isOn = robotTile is WiredTile && robotTile.ports.any {it.isOn()}
+        robot.isOn = robotTile is WiredTile && robotTile.ports.any {it.isOn()} && !robotTile.isInsulated
     }
 
     operator fun get(x: Int, y: Int): Tile? = tiles[Pair(x,y)]

@@ -6,7 +6,7 @@ import com.ragusa.game.Assets
 import com.ragusa.game.Direction
 import com.ragusa.game.initTextureStates
 
-class TileInverter : BinaryGateTile() {
+class TileInverter(isLocked: Boolean, isCoated: Boolean) : BinaryGateTile(isLocked, isCoated) {
     override val gateStateTextures: Map<Int, Texture> = initTextureStates(mapOf(
             DEFAULT_TEXTURE to Assets.tiles.inverter.state_01,
         0b10 to Assets.tiles.inverter.state_10

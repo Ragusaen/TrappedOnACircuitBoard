@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.ragusa.game.Assets
 import com.ragusa.game.initTextureStates
 
-class TileAnd : TernaryGateTile() {
+class TileAnd(isLocked: Boolean, isCoated: Boolean) : TernaryGateTile(isLocked, isCoated) {
 
     override val gateStateTextures: Map<Int, Texture> = initTextureStates(mapOf(
             DEFAULT_TEXTURE to Assets.tiles.and.state_000,

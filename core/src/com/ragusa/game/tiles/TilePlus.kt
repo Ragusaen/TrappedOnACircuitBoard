@@ -5,7 +5,7 @@ import com.ragusa.game.Assets
 import com.ragusa.game.Direction
 import com.ragusa.game.initTextureStates
 
-class TilePlus : SimpleTile() {
+class TilePlus(isLocked: Boolean, isCoated: Boolean) : SimpleTile(isLocked, isCoated) {
     override val ports: Array<TilePort> = arrayOf(TilePort(Direction.NORTH), TilePort(Direction.EAST), TilePort(Direction.SOUTH), TilePort(Direction.WEST))
 
     override val wireStateTextures: Map<Int, Texture> = initTextureStates(mapOf(
