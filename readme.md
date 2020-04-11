@@ -12,7 +12,8 @@ This is a game about a small robot that must use logic gates to make pathways to
   - [X] Allow player to pick up and place down tiles using undoable actions
   - [X] Fix bugs with picking and placing tiles
   - [X] Add insulated and locked tiles
-- [ ] Create level system
+- [X] Create level system
+  - [X] Create a level file system and loader for it
   - [ ] Implement the goal tile
 - [ ] Create a level editor
 - [ ] Create UI
