@@ -1,0 +1,17 @@
+level ::= levelinfo  robot  mapdata
+
+levelinfo ::= 'name' identifier 'author' identifier
+
+robot ::= 'robot' integer ',' integer
+
+mapdata ::= 'tiles' mapentries
+
+mapentries ::= mapentry mapentries | EPSILON
+
+mapentry ::= integer integer ':' tiletype ':' direction ':' insulation ':' lock
+
+direction ::= 'north' | 'east' | 'south' | 'west'
+tiletype ::= 'straight' | 'bend' | 'source' | 'and' | 'inverter' | 'or' | 'plus' | 'split' | 'xor'
+insulation ::= 'insulated' | 'exposed'
+lock ::= 'locked' | 'unlocked'
+

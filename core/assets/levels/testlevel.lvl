@@ -1,0 +1,8 @@
+name Test Level
+author Ragusa
+
+robot 0 0
+
+tiles
+0 0 bend north insulated unlocked
+0 1 straight east exposed locked
