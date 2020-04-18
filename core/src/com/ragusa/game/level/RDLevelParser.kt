@@ -1,22 +1,31 @@
-package com.ragusa.game
+package com.ragusa.game.level
 
+import com.ragusa.game.tiles.Direction
+import com.ragusa.game.tiles.TileGrid
 import com.ragusa.game.player.Robot
 import com.ragusa.game.tiles.*
+import com.ragusa.game.tiles.finals.*
 
 class LevelParserException(message: String) : Exception(message)
 
 // Recursive descent parser for the level language
 class RDLevelParser {
 
-    var level: Level = Level()
+    var tileGrid: TileGrid? = null
+    var name = "No name"
+    var author = "Unknown"
+    var robot: Robot? = null
 
 
     fun parse(str: String): Level {
         Tokenizer.inputString = str
-        level.robot = Robot()
-        level.tileGrid = TileGrid(level.robot!!)
+        robot = Robot()
+        tileGrid = TileGrid(robot!!)
+        name = "No name"
+        author = "Unknown"
+
         level()
-        return level
+        return Level(name, author, tileGrid!!, robot!!)
     }
 
     private object Tokenizer {
@@ -66,7 +75,6 @@ class RDLevelParser {
                     }
                 }
             }
-            println(buffer)
             peek = buffer
             return buffer
         }
@@ -88,17 +96,17 @@ class RDLevelParser {
 
     private fun levelinfo() {
         match("name")
-        level.name = Tokenizer.advance()
+        name = Tokenizer.advance()
         seperation()
         match("author")
-        level.author = Tokenizer.advance()
+        author = Tokenizer.advance()
     }
 
 
     private fun robot() {
         match("robot")
-        level.robot!!.position.x = Tokenizer.advance().toInt().toFloat()
-        level.robot!!.position.y = Tokenizer.advance().toInt().toFloat()
+        robot!!.position.x = Tokenizer.advance().toInt().toFloat()
+        robot!!.position.y = Tokenizer.advance().toInt().toFloat()
 
     }
 
@@ -125,29 +133,21 @@ class RDLevelParser {
     private fun mapentry() {
         val x = Tokenizer.advance().toInt()
         val y = Tokenizer.advance().toInt()
-        val tileType = Tokenizer.advance()
-        val direction = getDirection()
-        val insulated = choose("insulated", "exposed")
-        val locked = choose("locked", "unlocked")
+        val tile = getTile(Tokenizer.advance())
+        tile.direction = getDirection()
+        tile.isInsulated = choose("insulated", "exposed")
+        tile.isLocked = choose("locked", "unlocked")
 
-        level.tileGrid!![x, y] = getTile(tileType, insulated, locked).withRotation(direction)
+        tileGrid!![x, y] = tile
     }
 
-    private fun getTile(tileType: String, isInsulated: Boolean, isLocked: Boolean): Tile {
-        return when (tileType) {
-            "straight" -> TileStraight(isLocked, isInsulated)
-            "bend" -> TileBend(isLocked, isInsulated)
-            "source" -> TileSource(isLocked, isInsulated)
-            "and" -> TileAnd(isLocked, isInsulated)
-            "inverter" -> TileInverter(isLocked, isInsulated)
-            "or" -> TileOr(isLocked, isInsulated)
-            "plus" -> TilePlus(isLocked, isInsulated)
-            "split" -> TileSplit(isLocked, isInsulated)
-            "xor" -> TileXor(isLocked, isInsulated)
-            "plain" -> Tile(isLocked, isInsulated)
+    private fun getTile(tileType: String): Tile {
+        val index = tileNames.indexOf(tileType)
 
-            else -> throw LevelParserException("Expected straight, bend, source, and, inverter, or, plus, split, xor or plain but got $tileType")
-        }
+        if (index == -1)
+            throw LevelParserException("Expected ${tileNames.joinToString(", ")} but found $tileType")
+
+        return allTiles[index].java.getDeclaredConstructor().newInstance()
     }
 
     private fun getDirection(): Direction {

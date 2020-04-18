@@ -1,6 +1,6 @@
 package com.ragusa.game.player.actions
 
-import com.ragusa.game.TileGrid
+import com.ragusa.game.tiles.TileGrid
 import com.ragusa.game.player.Robot
 import com.ragusa.game.tiles.PortState
 import com.ragusa.game.tiles.Tile

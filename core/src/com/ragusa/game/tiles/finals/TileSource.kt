@@ -1,14 +1,14 @@
-package com.ragusa.game.tiles
+package com.ragusa.game.tiles.finals
 
 import com.badlogic.gdx.graphics.Texture
 import com.ragusa.game.Assets
-import com.ragusa.game.Direction
-import com.ragusa.game.initTextureStates
+import com.ragusa.game.tiles.*
 
-class TileSource(isLocked: Boolean, isCoated: Boolean) : WiredTile(isLocked, isCoated) {
+class TileSource : WiredTile() {
     override val ports: Array<TilePort> = arrayOf(TilePort(Direction.NORTH))
 
     override val wireStateTextures: Map<Int, Texture> = initTextureStates(mapOf(
+            0b0 to Assets.tiles.source.state_1,
             0b1 to Assets.tiles.source.state_1
     ))
 

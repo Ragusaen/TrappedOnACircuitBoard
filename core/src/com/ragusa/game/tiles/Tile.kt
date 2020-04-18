@@ -1,19 +1,10 @@
 package com.ragusa.game.tiles
 
-import com.badlogic.gdx.assets.AssetDescriptor
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.Assets
-import com.ragusa.game.Direction
-import com.ragusa.game.IRenderable
-import com.ragusa.game.initSprite
-import com.ragusa.game.utility.plus
 import com.ragusa.game.utility.setPosition
-import java.security.InvalidKeyException
 
 
 // Describes the state of the port
@@ -32,11 +23,14 @@ data class TilePort(val direction: Direction) {
 
 
 
-open class Tile(val isLocked: Boolean, val isInsulated: Boolean): TileAble() {
+open class Tile: TileAble() {
+
+    var isLocked: Boolean  = false
+    var isInsulated: Boolean = false
 
     private val baseSprite: Sprite = initSprite(Sprite(Assets.manager.get(Assets.tiles.plain), 16, 16))
-    private val lockedSprite = if (isLocked) initSprite(Sprite(Assets.manager.get(Assets.tiles.screws))) else null
-    private val insulatedSprite=  if (isInsulated) initSprite(Sprite(Assets.manager.get(Assets.tiles.insulated))) else null
+    private val lockedSprite = initSprite(Sprite(Assets.manager.get(Assets.tiles.screws)))
+    private val insulatedSprite=  initSprite(Sprite(Assets.manager.get(Assets.tiles.insulated)))
 
     open fun updateSprites() {
         baseSprite.rotation = -90f * direction.ordinal
@@ -51,22 +45,20 @@ open class Tile(val isLocked: Boolean, val isInsulated: Boolean): TileAble() {
     final override fun render(batch: SpriteBatch, relativeTo: Vector2) {
         renderInternal(batch, relativeTo)
         if (isLocked) {
-            lockedSprite!!.setPosition(relativeTo)
+            lockedSprite.setPosition(relativeTo)
             lockedSprite.draw(batch)
         }
 
         if (isInsulated) {
-            insulatedSprite!!.setPosition(relativeTo)
+            insulatedSprite.setPosition(relativeTo)
             insulatedSprite.draw(batch)
         }
     }
 
-    open fun renderInternal(batch: SpriteBatch, relativeTo: Vector2) {
+    protected open fun renderInternal(batch: SpriteBatch, relativeTo: Vector2) {
         baseSprite.setPosition(relativeTo)
         baseSprite.draw(batch)
     }
-
-
 }
 
 fun Tile.withRotation(rotation: Direction): Tile {

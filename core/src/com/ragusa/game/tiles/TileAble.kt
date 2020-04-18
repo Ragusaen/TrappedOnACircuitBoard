@@ -1,7 +1,5 @@
 package com.ragusa.game.tiles
 
-import com.badlogic.gdx.math.Vector2
-import com.ragusa.game.Direction
 import com.ragusa.game.IRenderable
 
 abstract class TileAble: IRenderable {

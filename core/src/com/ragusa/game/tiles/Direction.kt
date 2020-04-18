@@ -1,4 +1,4 @@
-package com.ragusa.game
+package com.ragusa.game.tiles
 
 enum class Direction {
     NORTH, EAST, SOUTH, WEST;

@@ -5,15 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.Assets
-import com.ragusa.game.Direction
-import com.ragusa.game.initSprite
-import com.ragusa.game.initTextureStates
-import com.ragusa.game.utility.plus
 import com.ragusa.game.utility.setPosition
-import java.util.*
 
 // Gate tiles are tiles that transform the signal. These are always delayed (atleast) one tick.
-abstract class GateTile(isLocked: Boolean, isCoated: Boolean) : WiredTile(isLocked, isCoated) {
+abstract class GateTile : WiredTile() {
     companion object {
         const val DEFAULT_TEXTURE: Int = -1
     }
@@ -39,7 +34,7 @@ abstract class GateTile(isLocked: Boolean, isCoated: Boolean) : WiredTile(isLock
     }
 }
 
-abstract class BinaryGateTile(isLocked: Boolean, isCoated: Boolean) : GateTile(isLocked, isCoated) {
+abstract class BinaryGateTile : GateTile() {
     final override val ports: Array<TilePort> = arrayOf(TilePort(Direction.NORTH), TilePort(Direction.SOUTH))
 
     final override val wireStateTextures = initTextureStates(mapOf(
@@ -51,7 +46,7 @@ abstract class BinaryGateTile(isLocked: Boolean, isCoated: Boolean) : GateTile(i
 
 }
 
-abstract class TernaryGateTile(isLocked: Boolean, isCoated: Boolean) : GateTile(isLocked, isCoated) {
+abstract class TernaryGateTile: GateTile() {
     final override val ports: Array<TilePort> = arrayOf(TilePort(Direction.NORTH), TilePort(Direction.EAST), TilePort(Direction.WEST))
 
     final override val wireStateTextures = initTextureStates(mapOf(

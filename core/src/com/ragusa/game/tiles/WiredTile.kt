@@ -1,18 +1,14 @@
 package com.ragusa.game.tiles
 
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.Assets
-import com.ragusa.game.Direction
-import com.ragusa.game.initSprite
-import com.ragusa.game.utility.plus
 import com.ragusa.game.utility.setPosition
 import java.security.InvalidKeyException
 
-abstract class WiredTile(isLocked: Boolean, isCoated: Boolean) : Tile(isLocked, isCoated) {
+abstract class WiredTile : Tile() {
     // Update the internal state of the tile.
     // This only concerns the state of the ports on this tile, not the connected ones
     abstract fun updateInternalState()

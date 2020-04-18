@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.Assets
-import com.ragusa.game.Direction
-import com.ragusa.game.initSprite
-import com.ragusa.game.initTextureStates
+import com.ragusa.game.tiles.Direction
+import com.ragusa.game.tiles.initSprite
+import com.ragusa.game.tiles.initTextureStates
 import com.ragusa.game.tiles.Tile
 import com.ragusa.game.tiles.TileAble
 import com.ragusa.game.utility.*
@@ -31,8 +31,8 @@ class Robot: TileAble() {
 
 
     val textures = initTextureStates(mapOf(
-        0 to Assets.player.off,
-        1 to Assets.player.on
+            0 to Assets.player.off,
+            1 to Assets.player.on
     ))
     val sprite: Sprite = initSprite(Sprite(textures[1], 16, 16))
 

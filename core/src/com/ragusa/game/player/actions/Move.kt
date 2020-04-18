@@ -1,8 +1,7 @@
 package com.ragusa.game.player.actions
 
-import com.badlogic.gdx.math.Vector2
-import com.ragusa.game.Direction
-import com.ragusa.game.TileGrid
+import com.ragusa.game.tiles.Direction
+import com.ragusa.game.tiles.TileGrid
 import com.ragusa.game.player.Robot
 import com.ragusa.game.tiles.WiredTile
 import com.ragusa.game.utility.*

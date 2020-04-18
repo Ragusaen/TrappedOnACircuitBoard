@@ -1,9 +1,9 @@
-package com.ragusa.game
+package com.ragusa.game.tiles
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
+import com.ragusa.game.IRenderable
 import com.ragusa.game.player.Robot
-import com.ragusa.game.tiles.*
 import com.ragusa.game.utility.*
 
 class TileGrid(val robot: Robot) : IRenderable, Iterable<Tile> {
@@ -150,4 +150,5 @@ class TileGrid(val robot: Robot) : IRenderable, Iterable<Tile> {
 
     override operator fun iterator() = TileGridIterator(this)
 
+    fun getInternalTiles(): Map<Pair<Int, Int>, Tile> = tiles
 }

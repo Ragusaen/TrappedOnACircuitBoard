@@ -1,7 +1,7 @@
 package com.ragusa.game.player.actions
 
-import com.ragusa.game.Direction
-import com.ragusa.game.TileGrid
+import com.ragusa.game.tiles.Direction
+import com.ragusa.game.tiles.TileGrid
 import com.ragusa.game.player.Robot
 
 class Turn(val direction: Direction, robot: Robot) : UndoableAction(robot) {

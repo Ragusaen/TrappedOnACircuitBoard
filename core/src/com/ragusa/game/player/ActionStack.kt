@@ -1,6 +1,6 @@
 package com.ragusa.game.player
 
-import com.ragusa.game.TileGrid
+import com.ragusa.game.tiles.TileGrid
 import com.ragusa.game.player.actions.UndoableAction
 
 class ActionStack(val tileGrid: TileGrid) {

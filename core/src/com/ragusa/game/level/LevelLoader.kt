@@ -1,4 +1,4 @@
-package com.ragusa.game
+package com.ragusa.game.level
 
 import com.badlogic.gdx.assets.AssetDescriptor
 import com.badlogic.gdx.assets.AssetLoaderParameters
