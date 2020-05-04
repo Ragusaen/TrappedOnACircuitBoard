@@ -26,7 +26,8 @@ val allTiles = listOf(
         TileInverter::class,
         TileAnd::class,
         TileOr::class,
-        TileXor::class
+        TileXor::class,
+        TileGoal::class
 )
 
 // Must be in same order as allTiles
@@ -40,5 +41,6 @@ val tileNames = listOf(
         "inverter",
         "and",
         "or",
-        "xor"
+        "xor",
+        "goal"
 )

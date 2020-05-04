@@ -2,7 +2,7 @@ package com.ragusa.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.ragusa.game.MainGame;
+import com.ragusa.game.GameAdapter;
 
 
 public class DesktopLauncher {
@@ -10,6 +10,6 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.height = 720;
 		config.width = 1280;
-		new LwjglApplication(new MainGame(), config);
+		new LwjglApplication(new GameAdapter(), config);
 	}
 }

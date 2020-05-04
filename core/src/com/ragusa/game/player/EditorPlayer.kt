@@ -117,6 +117,8 @@ class EditorPlayer(private val level: Level) : IRenderable {
             currentTileIndex = 8
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0))
             currentTileIndex = 9
+        if (Gdx.input.isKeyJustPressed(Input.Keys.TAB))
+            currentTileIndex = (currentTileIndex + 1) % allTiles.size
 
     }
 
