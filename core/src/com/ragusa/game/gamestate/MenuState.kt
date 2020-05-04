@@ -13,7 +13,7 @@ class MenuState(val playLevel: ((Level)->Unit)) : GameState() {
 
     override fun update() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-            playLevel(Assets.)
+
         }
     }
 

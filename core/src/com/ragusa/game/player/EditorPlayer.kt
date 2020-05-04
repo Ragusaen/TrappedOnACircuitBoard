@@ -27,8 +27,8 @@ class EditorPlayer(private val level: Level) : IRenderable {
             level.robot.position += UndoableAction.dirToVec[dir]!!
     }
 
-    private val handFrameOff = initHandSprite(Assets.UI.hand_frame_off)
-    private val handFrameOn = initHandSprite(Assets.UI.hand_frame_on)
+    private val handFrameOff = initHandSprite(Assets.textures.UI.hand_frame_off)
+    private val handFrameOn = initHandSprite(Assets.textures.UI.hand_frame_on)
 
     private fun initHandSprite(asset: AssetDescriptor<Texture>): Sprite {
         val sprite = Sprite(Assets.manager.get(asset))

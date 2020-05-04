@@ -28,9 +28,9 @@ open class Tile: TileAble() {
     var isLocked: Boolean  = false
     var isInsulated: Boolean = false
 
-    private val baseSprite: Sprite = initSprite(Sprite(Assets.manager.get(Assets.tiles.plain), 16, 16))
-    private val lockedSprite = initSprite(Sprite(Assets.manager.get(Assets.tiles.screws)))
-    private val insulatedSprite=  initSprite(Sprite(Assets.manager.get(Assets.tiles.insulated)))
+    private val baseSprite: Sprite = initSprite(Sprite(Assets.manager.get(Assets.textures.tiles.plain), 16, 16))
+    private val lockedSprite = initSprite(Sprite(Assets.manager.get(Assets.textures.tiles.screws)))
+    private val insulatedSprite=  initSprite(Sprite(Assets.manager.get(Assets.textures.tiles.insulated)))
 
     open fun updateSprites() {
         baseSprite.rotation = -90f * direction.ordinal

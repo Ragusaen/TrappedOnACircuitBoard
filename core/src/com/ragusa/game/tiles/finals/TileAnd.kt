@@ -9,8 +9,8 @@ import com.ragusa.game.tiles.initTextureStates
 class TileAnd : TernaryGateTile() {
 
     override val gateStateTextures: Map<Int, Texture> = initTextureStates(mapOf(
-            DEFAULT_TEXTURE to Assets.tiles.and.state_000,
-            0b111 to Assets.tiles.and.state_000
+            DEFAULT_TEXTURE to Assets.textures.tiles.and.state_000,
+            0b111 to Assets.textures.tiles.and.state_000
     ))
 
     override fun updateInternalState() {

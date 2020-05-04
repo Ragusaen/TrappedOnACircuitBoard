@@ -8,8 +8,8 @@ class TileSource : WiredTile() {
     override val ports: Array<TilePort> = arrayOf(TilePort(Direction.NORTH))
 
     override val wireStateTextures: Map<Int, Texture> = initTextureStates(mapOf(
-            0b0 to Assets.tiles.source.state_1,
-            0b1 to Assets.tiles.source.state_1
+            0b0 to Assets.textures.tiles.source.state_1,
+            0b1 to Assets.textures.tiles.source.state_1
     ))
 
     override fun updateInternalState() {

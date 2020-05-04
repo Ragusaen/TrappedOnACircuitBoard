@@ -17,7 +17,7 @@ abstract class WiredTile : Tile() {
 
     protected abstract val wireStateTextures: Map<Int, Texture>
 
-    private val wireSprite = initSprite(Sprite(Assets.manager.get(Assets.tiles.plain), 16, 16));
+    private val wireSprite = initSprite(Sprite(Assets.manager.get(Assets.textures.tiles.plain), 16, 16));
 
     protected open fun getState(): Int {
         var state: Int = 0

@@ -11,7 +11,7 @@ class TileGoal : SimpleTile() {
     override val ports: Array<TilePort> = arrayOf(TilePort(Direction.NORTH))
 
     override val wireStateTextures: Map<Int, Texture> = initTextureStates(mapOf(
-            0 to Assets.tiles.goal.state_0,
-            1 to Assets.tiles.goal.state_1
+            0 to Assets.textures.tiles.goal.state_0,
+            1 to Assets.textures.tiles.goal.state_1
     ))
 }

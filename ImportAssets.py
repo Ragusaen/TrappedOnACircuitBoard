@@ -1,41 +1,43 @@
 import os
+from pathlib import Path
 
-global out
-out = "package com.ragusa.game\n\nimport com.badlogic.gdx.graphics.Texture\nimport com.badlogic.gdx.assets.AssetDescriptor\nimport com.badlogic.gdx.assets.AssetManager\n\n"
+out = "package com.ragusa.game\n\nimport com.badlogic.gdx.graphics.Texture\nimport com.badlogic.gdx.assets.AssetDescriptor\nimport com.badlogic.gdx.assets.AssetManager\nimport com.ragusa.game.level.Level\n\nobject Assets {\n"
 load = "\n    val manager = AssetManager()\n    fun LoadAll() {\n"
 
-rootName = "Assets"
+root = Path(os.getcwd()) / "core" / "assets"
 
-def LoadAllUtil(path, rPath, self, indent, pack, classType):
-    print( rPath)
+
+def LoadDirUtil(path, className, outPath):
     global out
     global load
-    global rootName
-    contents = os.listdir(path)
-    out += indent + "object " + str(self) + " {\n"
-    for s in contents:
-        nPath = path + "/" + s
-        if os.path.isdir(nPath):
-            k = rPath + ("/" if self != rootName else "") + s
-            np = pack + "." if pack != "" else pack
-            LoadAllUtil(nPath, k, s, indent + "    ", np + self if self != rootName else np, classType)
+    dirElements = os.listdir(path)
+    for de in dirElements:
+        if os.path.isdir(path / de):
+            out += "object " + de + "{\n"
+            LoadDirUtil(path / de, className, outPath / de)
+            out += "}\n"
         else:
-            out += indent + "    val " + str(os.path.splitext(s)[0]) + " = AssetDescriptor(\"" + rPath + "/" + s + "\", " + classType + "::class.java);\n"
-            load += "        manager.load(" + pack + ("." if pack != "" else "") + self + "." + str(os.path.splitext(s)[0]) + ")\n"
+            nameWOExtension = os.path.splitext(de)[0]
+            out += "val " + nameWOExtension + " = AssetDescriptor(\"" + (outPath / de).as_posix() + "\", " + className + "::class.java)\n"
+            load += "manager.load(" + outPath.as_posix().replace("/", ".") + "." + nameWOExtension + ")\n"
 
-    if self != rootName:
-        out += indent + "}\n"
 
-def LoadAll(root, rootName, classType, startFolder):
-    LoadAllUtil(root + "/" + startFolder, startFolder + "/", rootName, "", "", classType)
 
-root = os.getcwd() + "/core/assets"
+def LoadDir(className, dirName):
+    global out
+    out += "object " + dirName + " {\n"
+    LoadDirUtil(root / dirName, className, Path(dirName))
+    out += "}\n"
 
-LoadAll(root, rootName, "Texture", "textures/")
+
+
+LoadDir("Texture", "textures")
+LoadDir("Level", "levels")
+
 
 out += "\n\n" + load + "\n    }\n}"
 
-f = open(os.getcwd() + "/core/src/com/ragusa/game/Assets.kt", "w")
+f = open(Path(os.getcwd()) / "core/src/com/ragusa/game/Assets.kt", "w")
 f.write(out)
 f.close()
 

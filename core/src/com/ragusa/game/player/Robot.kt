@@ -31,8 +31,8 @@ class Robot: TileAble() {
 
 
     val textures = initTextureStates(mapOf(
-            0 to Assets.player.off,
-            1 to Assets.player.on
+            0 to Assets.textures.player.off,
+            1 to Assets.textures.player.on
     ))
     val sprite: Sprite = initSprite(Sprite(textures[1], 16, 16))
 
