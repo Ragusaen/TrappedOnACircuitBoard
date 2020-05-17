@@ -16,9 +16,11 @@ import com.ragusa.game.level.LevelLoader
 import com.ragusa.game.gamestate.PlayLevelState
 import com.ragusa.game.level.LevelExporter
 
+val controls = InputMapping.default
+
 class GameAdapter : ApplicationAdapter() {
     var batch: SpriteBatch? = null
-    var game = GameController()
+    var game: GameController? = null
 
 
     companion object {
@@ -29,23 +31,21 @@ class GameAdapter : ApplicationAdapter() {
         val resolver = InternalFileHandleResolver()
         Assets.manager.setLoader(Level::class.java, LevelLoader(resolver))
 
-        val levelDescriptor = AssetDescriptor("levels\\testlevel.lvl", Level::class.java)
-
-        Assets.LoadAll()
-        Assets.manager.load(levelDescriptor)
+        Assets.loadAll()
         Assets.manager.finishLoading()
 
         batch = SpriteBatch()
+        game = GameController()
     }
 
     override fun render() {
         Gdx.gl.glClearColor(0.45f, 0.50f, 0.55f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
-        game.update()
+        game!!.update()
 
         batch!!.begin()
-        game.render(batch!!)
+        game!!.render(batch!!, Vector2.Zero)
         batch!!.end()
     }
 

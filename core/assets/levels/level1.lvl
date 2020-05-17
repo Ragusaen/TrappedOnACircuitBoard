@@ -1,0 +1,14 @@
+name No name
+author Unknown
+
+robot 1 0
+
+tiles
+1 0 source north exposed unlocked
+1 1 straight north exposed unlocked
+1 2 bend east exposed unlocked
+2 2 plus east exposed unlocked
+2 3 bend south exposed unlocked
+3 2 straight east exposed unlocked
+2 1 straight north exposed unlocked
+4 3 goal south exposed unlocked

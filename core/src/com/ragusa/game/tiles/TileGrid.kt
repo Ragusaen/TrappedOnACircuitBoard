@@ -89,16 +89,22 @@ class TileGrid(val robot: Robot) : IRenderable, Iterable<Tile> {
         for (i in 0 until tiles.size) { // DEBUG; replace step with
             for (tile in WiredTileIterator(this)) {
                 for (port in tile.ports) {
-                    if (port.connectedPort == null)
-                        continue
 
-                    // If this port is OFF and the connected port is OUT, then set this to IN
-                    if (port.state == PortState.OFF && port.connectedPort!!.state == PortState.OUT)
-                        port.state = PortState.IN
+                    // If this port has no connection, ensure that it doesn't have a false in signal
+                    if (port.connectedPort == null) {
+                        if (port.state == PortState.IN)
+                            port.state = PortState.OFF
+                    }
+                    // If the port is connected, propagate signals
+                    else {
+                        // If this port is OFF and the connected port is OUT, then set this to IN
+                        if (port.state == PortState.OFF && port.connectedPort!!.state == PortState.OUT)
+                            port.state = PortState.IN
 
-                    // If this port is IN and the connected port is OFF, then set this to OFF
-                    else if (port.state == PortState.IN && port.connectedPort!!.state == PortState.OFF)
-                        port.state = PortState.OFF
+                        // If this port is IN and the connected port is OFF, then set this to OFF
+                        else if (port.state == PortState.IN && port.connectedPort!!.state == PortState.OFF)
+                            port.state = PortState.OFF
+                    }
                 }
 
                 // Instantly update internal states of non gate tiles

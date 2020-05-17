@@ -3,11 +3,12 @@ package com.ragusa.game.tiles
 import com.badlogic.gdx.assets.AssetDescriptor
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
+import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.Assets
 import com.ragusa.game.tiles.finals.*
 
-fun initSprite(sprite: Sprite): Sprite {
-    sprite.setSize(TileAble.tileSize, TileAble.tileSize)
+fun initSprite(sprite: Sprite, size: Vector2 = Vector2(TileAble.tileSize, TileAble.tileSize)): Sprite {
+    sprite.setSize(size.x, size.y)
     sprite.setOrigin(TileAble.tileSize / 2, TileAble.tileSize / 2)
     return sprite
 }

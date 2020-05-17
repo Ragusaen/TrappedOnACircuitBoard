@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.assets.AssetDescriptor
 import com.badlogic.gdx.assets.AssetManager
 import com.ragusa.game.level.Level
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 
 object Assets {
 object textures {
@@ -43,6 +44,10 @@ val state_110 = AssetDescriptor("textures/tiles/gate/ternary/state_110.png", Tex
 val state_111 = AssetDescriptor("textures/tiles/gate/ternary/state_111.png", Texture::class.java)
 }
 }
+object goal{
+val state_0 = AssetDescriptor("textures/tiles/goal/state_0.png", Texture::class.java)
+val state_1 = AssetDescriptor("textures/tiles/goal/state_1.png", Texture::class.java)
+}
 val insulated = AssetDescriptor("textures/tiles/insulated.png", Texture::class.java)
 object inverter{
 val state_01 = AssetDescriptor("textures/tiles/inverter/state_01.png", Texture::class.java)
@@ -81,16 +86,24 @@ val state_110 = AssetDescriptor("textures/tiles/xor/state_110.png", Texture::cla
 object UI{
 val hand_frame_off = AssetDescriptor("textures/UI/hand_frame_off.png", Texture::class.java)
 val hand_frame_on = AssetDescriptor("textures/UI/hand_frame_on.png", Texture::class.java)
+val menu_item_off = AssetDescriptor("textures/UI/menu_item_off.png", Texture::class.java)
+val menu_item_on = AssetDescriptor("textures/UI/menu_item_on.png", Texture::class.java)
 }
 }
 object levels {
+val level1 = AssetDescriptor("levels/level1.lvl", Level::class.java)
+val level2 = AssetDescriptor("levels/level2.lvl", Level::class.java)
 val testlevel = AssetDescriptor("levels/testlevel.lvl", Level::class.java)
+}
+object fonts {
+val volleyball_fnt = AssetDescriptor("fonts/volleyball.fnt", BitmapFont::class.java)
+val volleyball_png = AssetDescriptor("fonts/volleyball.png", BitmapFont::class.java)
 }
 
 
 
     val manager = AssetManager()
-    fun LoadAll() {
+    fun loadAll() {
 manager.load(textures.player.off)
 manager.load(textures.player.on)
 manager.load(textures.tiles.and.state_000)
@@ -112,6 +125,8 @@ manager.load(textures.tiles.gate.ternary.state_100)
 manager.load(textures.tiles.gate.ternary.state_101)
 manager.load(textures.tiles.gate.ternary.state_110)
 manager.load(textures.tiles.gate.ternary.state_111)
+manager.load(textures.tiles.goal.state_0)
+manager.load(textures.tiles.goal.state_1)
 manager.load(textures.tiles.insulated)
 manager.load(textures.tiles.inverter.state_01)
 manager.load(textures.tiles.inverter.state_10)
@@ -134,7 +149,13 @@ manager.load(textures.tiles.xor.state_101)
 manager.load(textures.tiles.xor.state_110)
 manager.load(textures.UI.hand_frame_off)
 manager.load(textures.UI.hand_frame_on)
+manager.load(textures.UI.menu_item_off)
+manager.load(textures.UI.menu_item_on)
+manager.load(levels.level1)
+manager.load(levels.level2)
 manager.load(levels.testlevel)
+manager.load(fonts.volleyball_fnt)
+manager.load(fonts.volleyball_png)
 
     }
 }

@@ -4,7 +4,6 @@ import com.ragusa.game.tiles.Direction
 import com.ragusa.game.tiles.TileGrid
 import com.ragusa.game.player.Robot
 import com.ragusa.game.tiles.*
-import com.ragusa.game.tiles.finals.*
 
 class LevelParserException(message: String) : Exception(message)
 
@@ -16,9 +15,11 @@ class RDLevelParser {
     var author = "Unknown"
     var robot: Robot? = null
 
+    private val tokenizer = Tokenizer()
+
 
     fun parse(str: String): Level {
-        Tokenizer.inputString = str
+        tokenizer.inputString = str
         robot = Robot()
         tileGrid = TileGrid(robot!!)
         name = "No name"
@@ -28,7 +29,7 @@ class RDLevelParser {
         return Level(name, author, tileGrid!!, robot!!)
     }
 
-    private object Tokenizer {
+    private class Tokenizer {
         private var peek: String? = null
 
         var inputString = ""
@@ -96,17 +97,17 @@ class RDLevelParser {
 
     private fun levelinfo() {
         match("name")
-        name = Tokenizer.advance()
+        name = tokenizer.advance()
         seperation()
         match("author")
-        author = Tokenizer.advance()
+        author = tokenizer.advance()
     }
 
 
     private fun robot() {
         match("robot")
-        robot!!.position.x = Tokenizer.advance().toInt().toFloat()
-        robot!!.position.y = Tokenizer.advance().toInt().toFloat()
+        robot!!.position.x = tokenizer.advance().toInt().toFloat()
+        robot!!.position.y = tokenizer.advance().toInt().toFloat()
 
     }
 
@@ -117,7 +118,7 @@ class RDLevelParser {
     }
 
     private fun mapentries() {
-        if (Tokenizer.peek() != "") {
+        if (tokenizer.peek() != "") {
             mapentry()
             seperation()
             mapentries()
@@ -131,9 +132,9 @@ class RDLevelParser {
     }
 
     private fun mapentry() {
-        val x = Tokenizer.advance().toInt()
-        val y = Tokenizer.advance().toInt()
-        val tile = getTile(Tokenizer.advance())
+        val x = tokenizer.advance().toInt()
+        val y = tokenizer.advance().toInt()
+        val tile = getTile(tokenizer.advance())
         tile.direction = getDirection()
         tile.isInsulated = choose("insulated", "exposed")
         tile.isLocked = choose("locked", "unlocked")
@@ -151,7 +152,7 @@ class RDLevelParser {
     }
 
     private fun getDirection(): Direction {
-        val s = Tokenizer.advance()
+        val s = tokenizer.advance()
         return when(s) {
             "north" -> Direction.NORTH
             "east" -> Direction.EAST
@@ -162,7 +163,7 @@ class RDLevelParser {
     }
 
     private fun match(expected: String) {
-        val s = Tokenizer.advance()
+        val s = tokenizer.advance()
         if (s != expected) {
             throw LevelParserException("Excepted $expected but found $s")
         }
@@ -170,7 +171,7 @@ class RDLevelParser {
 
 
     private fun choose(trueCase: String, falseCase: String): Boolean {
-        val input = Tokenizer.advance()
+        val input = tokenizer.advance()
         if (input == trueCase) {
             return true
         } else if (input == falseCase) {
