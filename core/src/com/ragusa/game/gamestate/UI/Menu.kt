@@ -19,8 +19,8 @@ open class Menu(val position: Vector2, var parent: Menu?, items: List<NameItem>)
     var currentIndex = 0
         set(value) {
             menuItems[field].menuItem.isChosen = false
-            menuItems[value].menuItem.isChosen = true
-            field = value
+            field = value % menuItems.size
+            menuItems[field].menuItem.isChosen = true
         }
 
     class NameCallback(name: String, callback: (Int) -> Unit) : NameItem(name, callback)
@@ -51,7 +51,7 @@ open class Menu(val position: Vector2, var parent: Menu?, items: List<NameItem>)
 
     fun update() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
-            currentIndex = (currentIndex - 1) % menuItems.size
+            currentIndex = (menuItems.size + currentIndex - 1) % menuItems.size
         if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN))
             currentIndex = (currentIndex + 1) % menuItems.size
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER))

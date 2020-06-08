@@ -47,5 +47,4 @@ abstract class WiredTile : Tile() {
         wireSprite.draw(batch)
     }
 
-
 }

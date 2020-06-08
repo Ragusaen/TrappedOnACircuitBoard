@@ -28,8 +28,6 @@ class Robot: TileAble() {
 
     var hand: Tile? = null
 
-
-
     val textures = initTextureStates(mapOf(
             0 to Assets.textures.player.off,
             1 to Assets.textures.player.on

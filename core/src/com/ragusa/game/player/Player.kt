@@ -6,13 +6,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.tiles.Direction
 import com.ragusa.game.IRenderable
+import com.ragusa.game.controls
 import com.ragusa.game.level.Level
 import com.ragusa.game.player.actions.*
 
-class Player(val level: Level) : IRenderable {
-    val actions = ActionStack(level.tileGrid)
+class Player(level: Level) : AbstractPlayer(level) {
+    private val actions = ActionStack(level.tileGrid)
 
-    private fun turnMove(dir: Direction) {
+    override fun turnMove(dir: Direction) {
         if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
             actions.doAction(Turn(dir, level.robot))
         else
@@ -20,20 +21,11 @@ class Player(val level: Level) : IRenderable {
                 actions.doAction(Turn(dir, level.robot))
     }
 
-    fun userInput() {
-        // Movement
-        if (Gdx.input.isKeyJustPressed(Input.Keys.A))
-            turnMove(Direction.WEST)
-        if (Gdx.input.isKeyJustPressed(Input.Keys.D))
-            turnMove(Direction.EAST)
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W))
-            turnMove(Direction.NORTH)
-        if (Gdx.input.isKeyJustPressed(Input.Keys.S))
-            turnMove(Direction.SOUTH)
-
+    override fun userInput() {
+        super.userInput()
 
         // Pick up / place
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyJustPressed(controls.PickUpPlace)) {
             if (level.robot.hand == null)
                 actions.doAction(PickUp(level.robot))
             else
@@ -41,12 +33,12 @@ class Player(val level: Level) : IRenderable {
         }
 
         // Rotate hand
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+        if (Gdx.input.isKeyJustPressed(controls.Rotate)) {
             actions.doAction(RotateHand(level.robot))
         }
 
         // Undo
-        if (Gdx.input.isKeyJustPressed(Input.Keys.Z))
+        if (Gdx.input.isKeyJustPressed(controls.Undo))
             actions.undoAction()
     }
 

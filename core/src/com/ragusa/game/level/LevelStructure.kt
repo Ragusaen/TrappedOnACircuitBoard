@@ -11,6 +11,6 @@ class LevelGroup(name: String, val elements: List<LevelNode>) : LevelNode(name)
 class LevelItem(name: String, val level: AssetDescriptor<Level>) : LevelNode(name)
 
 val allLevels = LevelGroup("Tutorial", listOf(
-        LevelItem("Level 1", Assets.levels.level1),
-        LevelItem("Level 2", Assets.levels.level2)
+        LevelItem("Zero", Assets.levels.level1),
+        LevelItem("One", Assets.levels.level2)
 ))

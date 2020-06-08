@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.Assets
 import com.ragusa.game.IRenderable
+import com.ragusa.game.controls
 import com.ragusa.game.level.Level
 import com.ragusa.game.player.actions.*
 import com.ragusa.game.tiles.*
@@ -18,10 +19,10 @@ import com.ragusa.game.utility.plus
 import com.ragusa.game.utility.setPosition
 import com.ragusa.game.utility.times
 
-class EditorPlayer(private val level: Level) : IRenderable {
+class EditorPlayer(level: Level) : AbstractPlayer(level) {
 
-    private fun turnMove(dir: Direction) {
-        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
+    override fun turnMove(dir: Direction) {
+        if (Gdx.input.isKeyPressed(controls.Turn))
             level.robot.direction = dir
         else
             level.robot.position += UndoableAction.dirToVec[dir]!!
@@ -48,21 +49,12 @@ class EditorPlayer(private val level: Level) : IRenderable {
     private var insulating = false
     private var direction = Direction.NORTH
 
-    fun userInput() {
-        // Movement
-        if (Gdx.input.isKeyJustPressed(Input.Keys.A))
-            turnMove(Direction.WEST)
-        if (Gdx.input.isKeyJustPressed(Input.Keys.D))
-            turnMove(Direction.EAST)
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W))
-            turnMove(Direction.NORTH)
-        if (Gdx.input.isKeyJustPressed(Input.Keys.S))
-            turnMove(Direction.SOUTH)
-
+    override fun userInput() {
+        super.userInput()
 
         // Place
         val targetPos = level.robot.position + UndoableAction.dirToVec[level.robot.direction]!!
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyJustPressed(controls.PickUpPlace)) {
             val newTile = allTiles[currentTileIndex].java.getDeclaredConstructor().newInstance()
             newTile.isLocked = locking
             newTile.isInsulated = insulating
@@ -71,26 +63,26 @@ class EditorPlayer(private val level: Level) : IRenderable {
         }
 
         // Delete
-        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+        if (Gdx.input.isKeyJustPressed(controls.Remove)) {
             level.tileGrid.removeAt(targetPos)
         }
 
         // Rotate hand
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+        if (Gdx.input.isKeyJustPressed(controls.Rotate)) {
             direction += Direction.EAST
             for (t in handTiles)
                 t.direction = direction
         }
 
         // Lock
-        if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+        if (Gdx.input.isKeyJustPressed(controls.Lock)) {
             locking = !locking
             for (t in handTiles)
                 t.isLocked = locking
         }
 
         // Insulate
-        if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
+        if (Gdx.input.isKeyJustPressed(controls.Insulate)) {
             insulating = !insulating
             for (t in handTiles)
                 t.isInsulated = insulating
@@ -117,14 +109,16 @@ class EditorPlayer(private val level: Level) : IRenderable {
             currentTileIndex = 8
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0))
             currentTileIndex = 9
-        if (Gdx.input.isKeyJustPressed(Input.Keys.TAB))
+
+        // Select the next item
+        if (Gdx.input.isKeyJustPressed(controls.NextItem))
             currentTileIndex = (currentTileIndex + 1) % allTiles.size
 
     }
 
     override fun render(batch: SpriteBatch, relativeTo: Vector2) {
         val offSet = Vector2(100f, 0f)
-        val startPos = Vector2(Gdx.graphics.width / 2 - offSet.x * 5, TileAble.tileSize / 4f)
+        val startPos = Vector2(Gdx.graphics.width / 2 - offSet.x * (allTiles.size / 2), TileAble.tileSize / 4f)
         for (i in handTiles.indices) {
             val drawPos = startPos + offSet * i.toFloat()
             val frameOffset = 0.125f * TileAble.tileSize

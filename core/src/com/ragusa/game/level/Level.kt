@@ -12,7 +12,6 @@ class Level(val name: String = "Default Name",
             val tileGrid: TileGrid,
             val robot: Robot) : IRenderable {
 
-
     override fun render(batch: SpriteBatch, relativeTo: Vector2) {
         tileGrid.render(batch, relativeTo)
         robot.render(batch, relativeTo)

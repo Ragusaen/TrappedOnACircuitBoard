@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.Assets
 import com.ragusa.game.tiles.finals.*
+import java.lang.reflect.Modifier
+import kotlin.reflect.full.createInstance
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.jvm.javaField
 
 fun initSprite(sprite: Sprite, size: Vector2 = Vector2(TileAble.tileSize, TileAble.tileSize)): Sprite {
     sprite.setSize(size.x, size.y)
@@ -24,6 +28,7 @@ val allTiles = listOf(
         TileBend::class,
         TileSplit::class,
         TilePlus::class,
+        TileDiode::class,
         TileInverter::class,
         TileAnd::class,
         TileOr::class,
@@ -39,6 +44,7 @@ val tileNames = listOf(
         "bend",
         "split",
         "plus",
+        "diode",
         "inverter",
         "and",
         "or",

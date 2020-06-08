@@ -7,8 +7,12 @@ import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.assets.AssetDescriptor
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.scenes.scene2d.Actor
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.ragusa.game.gamestate.EditLevelState
 import com.ragusa.game.gamestate.GameState
 import com.ragusa.game.level.Level
@@ -21,7 +25,6 @@ val controls = InputMapping.default
 class GameAdapter : ApplicationAdapter() {
     var batch: SpriteBatch? = null
     var game: GameController? = null
-
 
     companion object {
         const val debug: Boolean = true

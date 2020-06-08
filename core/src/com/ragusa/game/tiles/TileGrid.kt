@@ -5,8 +5,11 @@ import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.IRenderable
 import com.ragusa.game.player.Robot
 import com.ragusa.game.utility.*
+import java.lang.reflect.Modifier
+import kotlin.reflect.full.createInstance
+import kotlin.reflect.jvm.kotlinProperty
 
-class TileGrid(val robot: Robot) : IRenderable, Iterable<Tile> {
+class TileGrid : IRenderable, Iterable<Tile> {
 
     class TileGridIterator(tileGrid: TileGrid) : Iterator<Tile> {
         private val tilesIterator = tileGrid.tiles.entries.map { it.value }.iterator()
@@ -71,7 +74,18 @@ class TileGrid(val robot: Robot) : IRenderable, Iterable<Tile> {
 
     }
 
-    private val tiles: MutableMap<Pair<Int, Int>, Tile> = mutableMapOf()
+    val robot: Robot
+    constructor(robot: Robot) {
+        this.robot = robot
+        this.tiles = mutableMapOf()
+    }
+
+    private constructor(robot: Robot, tiles: MutableMap<Pair<Int, Int>, Tile>) {
+        this.robot = robot
+        this.tiles = tiles
+    }
+
+    private val tiles: MutableMap<Pair<Int, Int>, Tile>
 
     override fun render(batch: SpriteBatch, relativeTo: Vector2) {
         for ((pos, tile) in tiles) {
@@ -158,3 +172,4 @@ class TileGrid(val robot: Robot) : IRenderable, Iterable<Tile> {
 
     fun getInternalTiles(): Map<Pair<Int, Int>, Tile> = tiles
 }
+

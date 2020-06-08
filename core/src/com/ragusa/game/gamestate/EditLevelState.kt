@@ -7,8 +7,9 @@ import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.level.Level
 import com.ragusa.game.level.LevelExporter
 import com.ragusa.game.player.EditorPlayer
+import com.ragusa.game.GameController.FinishLevelAction as FLA
 
-class EditLevelState(level: Level) : AbstractLevelState(level) {
+class EditLevelState(level: Level, finishLevel: (FLA) -> Unit) : AbstractLevelState(level, finishLevel) {
 
     private val editorPlayer = EditorPlayer(level)
 
