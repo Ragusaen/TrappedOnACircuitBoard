@@ -14,6 +14,6 @@ This is a game about a small robot that must use logic gates to make pathways to
   - [X] Add insulated and locked tiles
 - [X] Create level system
   - [X] Create a level file system and loader for it
-  - [ ] Implement the goal tile
-- [ ] Create a level editor
+  - [X] Implement the goal tile
+- [X] Create a level editor
 - [ ] Create UI
