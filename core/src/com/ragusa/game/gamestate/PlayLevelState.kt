@@ -14,7 +14,7 @@ import com.ragusa.game.utility.plus
 import com.ragusa.game.utility.times
 import com.ragusa.game.GameController.FinishLevelAction as FLA
 
-class PlayLevelState(level: Level, finishLevel: (FLA) -> Unit, val editing: Boolean = false) : AbstractLevelState(level, finishLevel) {
+class PlayLevelState(level: Level, val editing: Boolean = false) : AbstractLevelState(level) {
 
     private val player = Player(level)
 
@@ -45,10 +45,7 @@ class PlayLevelState(level: Level, finishLevel: (FLA) -> Unit, val editing: Bool
         player.userInput()
 
         if (level.tileGrid[level.robot.position] is TileGoal) {
-            if (editing)
-                finishLevel(FLA.Edit)
-            else
-                finishLevel(FLA.Menu)
+            //TODO: Level finished
         }
     }
 }

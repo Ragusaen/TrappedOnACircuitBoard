@@ -24,5 +24,4 @@ class Place(robot: Robot) : UndoableAction(robot) {
         robot.hand = tileGrid[position]
         tileGrid.removeAt(position)
     }
-
 }

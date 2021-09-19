@@ -11,7 +11,6 @@ import com.ragusa.game.level.Level
 import com.ragusa.game.player.actions.*
 
 class Player(level: Level) : AbstractPlayer(level) {
-    private val actions = ActionStack(level.tileGrid)
 
     override fun turnMove(dir: Direction) {
         if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
@@ -36,10 +35,6 @@ class Player(level: Level) : AbstractPlayer(level) {
         if (Gdx.input.isKeyJustPressed(controls.Rotate)) {
             actions.doAction(RotateHand(level.robot))
         }
-
-        // Undo
-        if (Gdx.input.isKeyJustPressed(controls.Undo))
-            actions.undoAction()
     }
 
     override fun render(batch: SpriteBatch, relativeTo: Vector2) {

@@ -10,10 +10,15 @@ import com.ragusa.game.player.actions.RotateHand
 import com.ragusa.game.tiles.Direction
 
 abstract class AbstractPlayer(val level: Level) : IRenderable {
+    protected val actions = ActionStack(level.tileGrid)
 
     protected abstract fun turnMove(direction: Direction)
 
     open fun userInput() {
+        // Undo
+        if (Gdx.input.isKeyJustPressed(controls.Undo))
+            actions.undoAction()
+
         // Movement
         if (Gdx.input.isKeyJustPressed(controls.MoveLeft))
             turnMove(Direction.WEST)

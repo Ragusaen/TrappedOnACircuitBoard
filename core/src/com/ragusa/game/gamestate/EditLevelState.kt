@@ -7,9 +7,10 @@ import com.badlogic.gdx.math.Vector2
 import com.ragusa.game.level.Level
 import com.ragusa.game.level.LevelExporter
 import com.ragusa.game.player.EditorPlayer
+import com.ragusa.game.utility.TextPromptListener
 import com.ragusa.game.GameController.FinishLevelAction as FLA
 
-class EditLevelState(level: Level, finishLevel: (FLA) -> Unit) : AbstractLevelState(level, finishLevel) {
+class EditLevelState(level: Level) : AbstractLevelState(level) {
 
     private val editorPlayer = EditorPlayer(level)
 
@@ -26,6 +27,12 @@ class EditLevelState(level: Level, finishLevel: (FLA) -> Unit) : AbstractLevelSt
         if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             val file = Gdx.files.external("Documents/My Games/Trapped On A Circuit Board/${level.name}.lvl")
             file.writeString(LevelExporter().export(level), false)
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            Gdx.input.getTextInput(TextPromptListener {
+                                                        if (it != null) level.name = it
+            }, "What is the name of the level?", "", "Level name")
         }
     }
 

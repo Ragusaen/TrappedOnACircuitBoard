@@ -2,29 +2,24 @@ package com.ragusa.game
 
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
-import com.badlogic.gdx.InputProcessor
-import com.badlogic.gdx.assets.AssetDescriptor
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.utils.viewport.ScreenViewport
-import com.ragusa.game.gamestate.EditLevelState
-import com.ragusa.game.gamestate.GameState
+import com.badlogic.gdx.utils.viewport.FitViewport
 import com.ragusa.game.level.Level
 import com.ragusa.game.level.LevelLoader
-import com.ragusa.game.gamestate.PlayLevelState
-import com.ragusa.game.level.LevelExporter
+import com.ragusa.game.level.LevelPack
+import com.ragusa.game.level.LevelPackLoader
 
-val controls = InputMapping.default
+val controls = InputMapping.colemak
 
 class GameAdapter : ApplicationAdapter() {
     var batch: SpriteBatch? = null
     var game: GameController? = null
+
+    var stage: Stage? = null
 
     companion object {
         const val debug: Boolean = true
@@ -33,12 +28,17 @@ class GameAdapter : ApplicationAdapter() {
     override fun create() {
         val resolver = InternalFileHandleResolver()
         Assets.manager.setLoader(Level::class.java, LevelLoader(resolver))
+        Assets.manager.setLoader(LevelPack::class.java, LevelPackLoader(resolver))
 
         Assets.loadAll()
         Assets.manager.finishLoading()
 
         batch = SpriteBatch()
         game = GameController()
+
+        val uiViewport = FitViewport(1280f, 720f )
+        stage = Stage(uiViewport, batch)
+        Gdx.input.inputProcessor = stage
     }
 
     override fun render() {

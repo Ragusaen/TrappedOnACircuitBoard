@@ -14,8 +14,7 @@ import com.ragusa.game.utility.minus
 import com.ragusa.game.utility.plus
 import com.ragusa.game.utility.times
 
-abstract class AbstractLevelState(val level: Level,
-                                  val finishLevel: (FLA) -> Unit) : GameState() {
+abstract class AbstractLevelState(val level: Level): GameState() {
 
     protected val font = Assets.manager.get(Assets.fonts.volleyball_fnt)
 
@@ -25,13 +24,22 @@ abstract class AbstractLevelState(val level: Level,
         val lookSpeed = 8f
     }
 
+    init {
+        if (level.tileGrid.averageTilePoint.x.isNaN() || level.tileGrid.averageTilePoint.y.isNaN()) {
+            viewPosition = Vector2(Gdx.graphics.width / 2f, Gdx.graphics.height / 2f)
+        } else {
+            viewPosition = (level.tileGrid.averageTilePoint - Vector2(.5f, .5f)) * -TileAble.tileSize +
+                    Vector2(Gdx.graphics.width / 2f, Gdx.graphics.height / 2f)
+        }
+    }
+
 
     override fun update() {
         updateViewPosition()
     }
 
     override fun setup() {
-        viewPosition = (level.robot.position - Vector2(.5f, .5f)) * TileAble.tileSize + Vector2(Gdx.graphics.width / 2f, Gdx.graphics.height / 2f)
+
     }
 
     override fun render(batch: SpriteBatch, relativeTo: Vector2) {

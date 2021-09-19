@@ -53,18 +53,17 @@ class EditorPlayer(level: Level) : AbstractPlayer(level) {
         super.userInput()
 
         // Place
-        val targetPos = level.robot.position + UndoableAction.dirToVec[level.robot.direction]!!
         if (Gdx.input.isKeyJustPressed(controls.PickUpPlace)) {
             val newTile = allTiles[currentTileIndex].java.getDeclaredConstructor().newInstance()
             newTile.isLocked = locking
             newTile.isInsulated = insulating
             newTile.direction = direction
-            level.tileGrid[targetPos] = newTile
+            actions.doAction(EditPlace(newTile, level.robot))
         }
 
         // Delete
         if (Gdx.input.isKeyJustPressed(controls.Remove)) {
-            level.tileGrid.removeAt(targetPos)
+            actions.doAction(EditRemove(level.robot))
         }
 
         // Rotate hand

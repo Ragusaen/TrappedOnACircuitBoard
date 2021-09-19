@@ -166,6 +166,8 @@ class TileGrid : IRenderable, Iterable<Tile> {
         }
     }
 
+    val averageTilePoint get() = tiles.keys.fold(Pair(0,0)) { acc, pair -> Pair(acc.first + pair.first, acc.second + pair.second) }.toVector().scl(1f / tiles.size)
+
     private fun isWiredTile(c: Pair<Int, Int>): Boolean = c in tiles && tiles[c] is WiredTile
 
     override operator fun iterator() = TileGridIterator(this)

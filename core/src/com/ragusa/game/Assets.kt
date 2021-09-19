@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetDescriptor
 import com.badlogic.gdx.assets.AssetManager
 import com.ragusa.game.level.Level
 import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.ragusa.game.level.LevelPack
 
 object Assets {
 object textures {
@@ -90,15 +91,20 @@ val menu_item_off = AssetDescriptor("textures/UI/menu_item_off.png", Texture::cl
 val menu_item_on = AssetDescriptor("textures/UI/menu_item_on.png", Texture::class.java)
 }
 }
-object levels {
-val level1 = AssetDescriptor("levels/level1.lvl", Level::class.java)
-val level2 = AssetDescriptor("levels/level2.lvl", Level::class.java)
-val testlevel = AssetDescriptor("levels/testlevel.lvl", Level::class.java)
-}
 object fonts {
 val volleyball_fnt = AssetDescriptor("fonts/volleyball.fnt", BitmapFont::class.java)
 val volleyball_png = AssetDescriptor("fonts/volleyball.png", BitmapFont::class.java)
 }
+val levelpacks = mapOf(
+"Basics" to mapOf(
+"Introduction" to AssetDescriptor("C:/Users/Ragusa/Documents/TrappedOnACircuitBoard/core/assets/levels/basics/level1.lvl", Level::class.java),
+"Stuck Tiles" to AssetDescriptor("C:/Users/Ragusa/Documents/TrappedOnACircuitBoard/core/assets/levels/basics/level2.lvl", Level::class.java),
+"Insulation" to AssetDescriptor("C:/Users/Ragusa/Documents/TrappedOnACircuitBoard/core/assets/levels/basics/level3.lvl", Level::class.java)
+),
+"Getting Complicated" to mapOf(
+"Test Level" to AssetDescriptor("C:/Users/Ragusa/Documents/TrappedOnACircuitBoard/core/assets/levels/complications/testlevel.lvl", Level::class.java)
+)
+)
 
 
 
@@ -151,9 +157,6 @@ manager.load(textures.UI.hand_frame_off)
 manager.load(textures.UI.hand_frame_on)
 manager.load(textures.UI.menu_item_off)
 manager.load(textures.UI.menu_item_on)
-manager.load(levels.level1)
-manager.load(levels.level2)
-manager.load(levels.testlevel)
 manager.load(fonts.volleyball_fnt)
 manager.load(fonts.volleyball_png)
 

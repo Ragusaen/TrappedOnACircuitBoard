@@ -14,6 +14,7 @@ data class InputMapping(
         val LookLeft: Int,
         val LookRight: Int,
         val MenuChoose: Int,
+        val MenuBack: Int,
         val PickUpPlace: Int,
         val Rotate: Int,
         val Remove: Int,
@@ -35,6 +36,7 @@ data class InputMapping(
                 Input.Keys.A,
                 Input.Keys.D,
                 Input.Keys.ENTER,
+                Input.Keys.ESCAPE,
                 Input.Keys.SPACE,
                 Input.Keys.R,
                 Input.Keys.Q,
@@ -44,6 +46,28 @@ data class InputMapping(
                 Input.Keys.I,
                 Input.Keys.TAB,
                 Input.Keys.P
+        )
+
+        val colemak = InputMapping(
+            Input.Keys.W,
+            Input.Keys.R,
+            Input.Keys.A,
+            Input.Keys.S,
+            Input.Keys.UP,
+            Input.Keys.DOWN,
+            Input.Keys.LEFT,
+            Input.Keys.RIGHT,
+            Input.Keys.ENTER,
+            Input.Keys.ESCAPE,
+            Input.Keys.SPACE,
+            Input.Keys.F,
+            Input.Keys.Q,
+            Input.Keys.SHIFT_LEFT,
+            Input.Keys.Z,
+            Input.Keys.L,
+            Input.Keys.I,
+            Input.Keys.TAB,
+            Input.Keys.P
         )
     }
 }
